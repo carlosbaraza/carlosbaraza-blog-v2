@@ -1,0 +1,37 @@
+{
+  "title": "Build, Launch, Repeat",
+  "author": "Carlos Baraza",
+  "headerTitle": "Build, Launch, Repeat",
+  "description": "Side hustle newsletter. Humble insights of a lifetime building online products. I write software and other philosophical stuff.",
+  "language": "en-us",
+  "locale": "en-US",
+  "siteUrl": "https://carlosbaraza.com",
+  "siteRepo": "https://github.com/carlosbaraza/carlosbaraza-blog",
+  "siteLogo": "/static/images/logo/512w/logo-512w.png",
+  "image": "/static/images/avatar-carlos-baraza-speaking.jpg",
+  "socialBanner": "/static/images/twitter-card.jpg",
+  "email": "me@carlosbaraza.com",
+  "social": {
+    "github": "https://github.com/carlosbaraza",
+    "twitter": "https://twitter.com/carlosbaraza",
+    "youtube": "https://youtube.com/carlosbaraza",
+    "linkedin": "https://www.linkedin.com/in/carlos-baraza"
+  },
+  "analytics": {
+    "googleAnalyticsId": "UA-123908007-1"
+  },
+  "newsletter": {
+    "provider": "convertkit"
+  },
+  "comment": {
+    "provider": "giscus"
+  },
+  "navigation": [
+    { "href": "/blog", "title": "Blog" },
+    { "href": "/projects", "title": "Projects" },
+    { "href": "/about", "title": "About me" }
+  ],
+  "redirects": [
+    { "source": "/resume", "destination": "/about", "permanent": true }
+  ]
+}
