@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+exported-content
+.agents
+.claude
+.next-docs
+*.md
+!README.md
