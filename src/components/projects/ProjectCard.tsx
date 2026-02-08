@@ -25,7 +25,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 src={project.imgSrc}
                 alt={project.title}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             ) : (
@@ -34,7 +34,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 alt=""
                 placeholder="blur"
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             )}

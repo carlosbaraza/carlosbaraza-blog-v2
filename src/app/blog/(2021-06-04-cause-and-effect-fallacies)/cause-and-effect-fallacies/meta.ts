@@ -7,4 +7,5 @@ export const post: BlogPost = {
   dateUpdated: "2021-06-04T22:01:24.000Z",
   tags: ["course", "notes"],
   draft: false,
+  images: ["/content/images/2021/06/cause-and-effect-hero.png"],
 };

@@ -6,7 +6,7 @@ export const projects: Project[] = [
     description:
       "Built with NextJS, TypeScript, PostgresSQL, GraphQL. I am the CTO and lead developer for this company.",
     href: "https://inpractise.com",
-    imgSrc: "/content/images/inpractise-screenshot.png",
+    imgSrc: "/content/images/inpractise-screenshot-2026.png",
     featured: true,
   },
   {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PostLayout } from "@/components/blog/PostLayout";
 import { post } from "./meta";
+import heroImage from "./hero.png";
 
 export const metadata: Metadata = {
   title: post.title,
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function DatabaseDesignCourse() {
   return (
-    <PostLayout post={post}>
+    <PostLayout post={post} heroImage={heroImage}>
       <h2>Concepts</h2>
 
       <ul>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PostLayout } from "@/components/blog/PostLayout";
 import { post } from "./meta";
+import heroImage from "./hero.png";
 
 export const metadata: Metadata = {
   title: post.title,
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function CauseAndEffectFallacies() {
   return (
-    <PostLayout post={post}>
+    <PostLayout post={post} heroImage={heroImage}>
       <p>
         Lately, I have been learning about formal and informal logic. Today, I
         will share some notes on cause-effect related fallacies, which are

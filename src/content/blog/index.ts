@@ -7,7 +7,6 @@ import { post as neverSplitTheDifferenceBookNotes } from "@/app/blog/(2021-06-12
 import { post as causeAndEffectFallacies } from "@/app/blog/(2021-06-04-cause-and-effect-fallacies)/cause-and-effect-fallacies/meta";
 import { post as buildingAStoryBrand } from "@/app/blog/(2021-05-28-building-a-story-brand)/building-a-story-brand/meta";
 import { post as typescriptStringToNumber } from "@/app/blog/(2021-05-16-typescript-string-to-number)/typescript-string-to-number/meta";
-import { post as webpackBundleAnalysisResources } from "@/app/blog/(2021-01-25-webpack-bundle-analysis-resources)/webpack-bundle-analysis-resources/meta";
 import { post as loonshtsBookNotes } from "@/app/blog/(2020-12-28-loonshots-book-notes)/loonshots-book-notes/meta";
 import { post as covid19AnonymousLettersToPatients } from "@/app/blog/(2020-12-28-covid-19-anonymous-letters-to-patients)/covid-19-anonymous-letters-to-patients/meta";
 import { post as shouldIBuyTheDip } from "@/app/blog/(2020-10-21-should-i-buy-the-dip)/should-i-buy-the-dip/meta";
@@ -60,7 +59,6 @@ export const allPosts: BlogPost[] = [
   causeAndEffectFallacies,
   buildingAStoryBrand,
   typescriptStringToNumber,
-  webpackBundleAnalysisResources,
   loonshtsBookNotes,
   covid19AnonymousLettersToPatients,
   shouldIBuyTheDip,
