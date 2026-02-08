@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SERVICE_NAME="carlosbaraza-autodeploy"
+SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
+
+systemctl stop "$SERVICE_NAME" 2>/dev/null || true
+systemctl disable "$SERVICE_NAME" 2>/dev/null || true
+rm -f "$SERVICE_FILE"
+systemctl daemon-reload
+
+echo "Uninstalled $SERVICE_NAME"
