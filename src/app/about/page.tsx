@@ -34,7 +34,7 @@ export default function AboutPage() {
             alt={author.name}
             width={160}
             height={160}
-            className="w-full h-full object-cover filter-[grayscale(1)_sepia(.3)_saturate(2)_hue-rotate(-40deg)]"
+            className="w-full h-full object-cover filter-[grayscale(1)_sepia(.2)_saturate(2)_hue-rotate(-30deg)]"
             priority
           />
         </div>
