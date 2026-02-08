@@ -1,0 +1,30 @@
+---
+title: "Cómo mi compañero casi pierde el acceso root en su propia máquina"
+slug: how-my-colleague-almost-lost-root-access-in-his-own-machine
+date_published: "2015-07-09T00:00:00.000Z"
+date_updated: "2015-07-09T00:00:00.000Z"
+tags: []
+draft: false
+summary: "Hoy estábamos intentando configurar un runner de CI en la máquina de uno de mis compañeros, que se va de vacaciones. Iba a dejar la máquina disponible..."
+---
+
+Hoy estábamos intentando configurar un runner de CI en la máquina de uno de mis compañeros, que se va de vacaciones. Iba a dejar la máquina disponible para que pudiéramos tener un ejecutor de pruebas adicional para uno de nuestros proyectos.
+
+Para configurar el runner, creamos un usuario en la máquina y configuramos el entorno. Después de algo de configuración nos dimos cuenta de que sería mejor usar un usuario existente en la máquina. Ahí es cuando mi amigo decidió eliminar el usuario innecesario (por línea de comandos) y accidentalmente borró el usuario y el grupo admin de la máquina (¡¡¡WTF!!!).
+
+Después de este desafortunado accidente, todo se complicó porque recrear el grupo era imposible sin acceso root (proporcionado al usuario a través del grupo admin). Además, la herramienta de gestión de usuarios de OSX se congela debido al grupo faltante. Usar Time Machine para recuperar un estado anterior tampoco era posible sin acceso de administrador.
+
+Más tarde, después de algo de pánico e investigación en línea, descubrimos que es posible reiniciar una máquina Apple en modo de usuario único (Single User mode), manteniendo cmd + s durante el arranque. Este atajo arranca el sistema e inicia sesión como root, mostrando el prompt del shell. A partir de este punto, solo es cuestión de restaurar el grupo admin predeterminado.
+
+1. Montar el sistema de archivos: `/sbin/mount -uw /`
+2. Iniciar opendirectoryd: `launchctl load /System/Library/LaunchDaemons/com.apple.opendirectoryd.plist`
+3. Crear el grupo *admin*: `dscl . create /Groups/admin`
+4. `dscl . create /Groups/admin gid 80`
+5. `dscl . create /Groups/admin RealName "Administrators"`
+6. Reasociar tu usuario a admin: `dseditgroup -o edit -a myuser -t user admin`
+7. Confirmar que el usuario está asociado al grupo: `dseditgroup -L admin`
+8. Reiniciar y arreglar el desastre desde la sesión normal de OSX.
+
+Afortunadamente, la máquina no tenía FileVault 2 habilitado ni contraseña de firmware y pudimos resolver este problema sin el momento incómodo de reportar que borraste el grupo admin por error.
+
+Como nota para el futuro, establece una contraseña de firmware y habilita FileVault2 si quieres evitar que algún eventual ladrón o persona no autorizada escale privilegios en tu máquina y acceda a tus datos no cifrados.

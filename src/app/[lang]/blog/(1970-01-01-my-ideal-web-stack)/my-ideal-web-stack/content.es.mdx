@@ -1,0 +1,72 @@
+---
+title: "Mi stack web ideal"
+slug: my-ideal-web-stack
+date_published: "1970-01-01T00:00:00.000Z"
+date_updated: "2020-07-08T01:07:48.000Z"
+tags: []
+draft: true
+summary: "Me he embarcado en la búsqueda del mejor stack web actual (a mediados de 2019). Esta es solo mi humilde opinión dado mi conocimiento actual..."
+---
+
+![](/content/images/downloaded_images/My-ideal-web-stack/1-whcTChgJd5EZB3vkx5HsNg.png)
+
+Stack NAME (Next, Apollo, Mongo, Express). Mi stack web ideal actual.
+
+Me he embarcado en la búsqueda del mejor stack web actual (a mediados de 2019). Esta es solo mi humilde opinión dado mi conocimiento actual del campo.
+
+**Aviso:** No pretendo entrar en peleas dogmáticas. Simplemente encontré este stack particularmente bueno, y pensé que valdría la pena compartirlo. ¡Si eres más productivo en cualquier otro lenguaje o stack, por favor úsalo!
+
+El punto de partida de cualquier decisión de stack debería ser una lista clara de requisitos que debe satisfacer. La decisión depende de tu situación y la situación de tu empresa.
+
+## Mis requisitos
+
+- Velocidad de desarrollo, porque soy un fundador en solitario y el único desarrollador.
+- Prototipado rápido.
+- SSR (Renderizado del lado del servidor para soporte SEO/SEM).
+- SPA: Aplicación de página única para crear grandes experiencias.
+- Barato y de código abierto: porque el proyecto probablemente morirá de todos modos.
+
+## Un poco de historia
+
+Hasta hace unos años, mis herramientas favoritas para arrancar un nuevo MVP eran [Meteor](https://www.meteor.com/) y [Create React App](https://github.com/facebook/create-react-app). Sin embargo, estoy bastante decepcionado con la situación actual de Meteor, ya que creo que hay algunos grandes cambios pendientes en la plataforma para hacerla genial de nuevo.
+
+Mi mayor prioridad es la velocidad de desarrollo porque quiero avanzar rápidamente.
+
+## El stack NAME (porque todo merece un NOMBRE)
+
+Después de algo de investigación y experimentación, me he decidido por:
+
+- [**NextJS**](https://nextjs.org/)**:** Excelente soporte para SSR (que es un requisito si quieres optimizar SEO/SEM). Bastante opinionado, pero aún flexible.
+- [**Apollo**](https://www.apollographql.com/) **(**[**GraphQL**](https://graphql.org/)**):** Uso [Apollo Server](https://github.com/apollographql/apollo-server) y [Apollo Client](https://github.com/apollographql/apollo-client) para exponer todos los datos que mi aplicación necesita. Consulta el ejemplo [with-apollo](https://github.com/zeit/next.js/tree/canary/examples/with-apollo) de Next para la integración de Apollo Client.
+- [**MongoDB**](https://www.mongodb.com/)**:** Para la capa de datos, elegí MongoDB (NoSQL) porque es más fácil empezar con él, a costa de potencialmente tener que lidiar con algunas inconsistencias de datos si la aplicación sobrevive lo suficiente (migraciones, tablas asociativas, esquema estricto, etc). La biblioteca [Mongoose](https://mongoosejs.com/) es bastante potente y permite algunas configuraciones de esquema excelentes. Una alternativa era usar un ORM como [Prisma](https://www.prisma.io/), pero decidí quedarme con MongoDB por ser más maduro y flexible que estos nuevos ORMs.
+- [**Express**](https://expressjs.com/): NextJS te da la posibilidad de usar un servidor Express personalizado ([consulta el ejemplo](https://github.com/zeit/next.js/tree/canary/examples/custom-server-express)). Entonces puedes exponer una API junto con las rutas de la aplicación web, usando directamente el único servidor Express. Expuse una API REST para la gestión de usuarios con PassportJS, un endpoint de API GraphQL, y las rutas estándar de Next.
+- [**TypeScript**](https://www.typescriptlang.org/)**:** Puede ralentizarte un poco, pero vale la pena por la seguridad extra que proporciona.
+- **Despliegue:** [Dokku](https://github.com/dokku/dokku). PaaS de código abierto basado en Docker. Por solo $10 puedes configurar tu propio PaaS tipo Heroku en un droplet, e incubar todos tus proyectos secundarios hasta que uno genere algo de dinero. Luego podrías transicionar a una solución más escalable si lo necesitas.
+- **CMS Headless:** Esta es una mejora que estoy considerando si alguna vez tengo que crear un proyecto que necesite ser mantenido por personas no técnicas. [Strapi](https://strapi.io) es un excelente CMS headless de código abierto, y podría acelerar el desarrollo porque pasarías menos tiempo escribiendo APIs y funcionalidad tipo CMS en tu aplicación.
+- **Gestión de usuarios y sesiones:** Tener que lidiar con contraseñas y sesiones parece un obstáculo con el que ninguna empresa pequeña debería tener que lidiar. Es una tarea repetitiva que consume tiempo y es propensa a errores, que toda empresa necesita. [PassportJS](http://www.passportjs.org/) está bien, pero echo de menos una integración más fuerte como el Accounts UI de Meteor. El proyecto [AccountsJS](https://github.com/accounts-js/accounts) parece prometedor, pero aún requiere algo de trabajo. Un servicio de *autenticación como servicio* como Auth0 o Firebase facilita este proceso porque pueden manejar la verificación de correo electrónico, restablecimiento de contraseñas, y múltiples proveedores OAuth como Google, Twitter, Facebook o GitHub. Elegí [**Firebase**](https://firebase.google.com/), porque se integra bien con otras herramientas de Google como Google App Domains y grupos, y potencialmente podría usar otros servicios de Firebase en el futuro.
+
+## Muéstrame el código
+
+Por favor, consulta mi boilerplate y repositorio de ejemplo ([carlosbaraza/name-stack](https://github.com/carlosbaraza/name-stack)).
+
+¡Siéntete libre de contribuir! Podríamos crear un gran boilerplate para aplicaciones modernas.
+
+## ¿Qué se podría mejorar?
+
+- Herramientas simples para empezar. Mi referencia es Meteor, porque creo que hicieron un gran trabajo reduciendo el tiempo de lanzamiento y prototipado. Sin embargo, al momento de escribir esto, el stack NAME requiere bastante configuración.
+- La gestión de usuarios no es ideal porque elegí delegarla a un servicio de *autenticación como servicio*. Pierdo control sobre los datos y me ata a una herramienta, pero aparentemente no es tan difícil migrar fuera de Firebase.
+- Pegamento y más pegamento: NextJS + Apollo + Mongo + Express + GraphQL + Firebase. Es bastante molesto y frustrante pasar tiempo pegando herramientas juntas. Pero lo peor es darse cuenta de que después de un día entero de trabajo, no completaste ninguna lógica de negocio real, solo pegaste piezas que deseabas que vinieran pegadas de fábrica. Tiene otra desventaja importante, y es que aumenta las partes móviles. Cuantas más partes móviles, más fácil es que se rompa y más difícil de mantener para una empresa pequeña. De nuevo, preferiría una solución unificada como Meteor.
+
+## Pero, ¿hay algo bueno?
+
+Hay muchos aspectos positivos en este stack, y nombraré algunos:
+
+- La velocidad de desarrollo es excelente porque Next es un [create-react-app](https://github.com/facebook/create-react-app) glorificado. GraphQL también es bastante divertido y rápido para trabajar.
+- Buen rendimiento. Un sitio renderizado del lado del servidor nunca será tan rápido como un sitio estático pre-renderizado alojado en CDN. Sin embargo, el renderizado del lado del servidor es muy superior a las Aplicaciones de Página Única (SPA), porque el cliente recibe inmediatamente el HTML del sitio, y puede mostrar y descargar recursos mientras se carga el paquete JS completo. Para la mayoría de aplicaciones, el servidor web estándar es suficiente. Si llegas a tener suficiente tráfico para alcanzar los cuellos de botella, probablemente tengas suficientes recursos para invertir en una solución más escalable.
+- Delegar la gestión de usuarios a Firebase tiene la ventaja de que cumple con el RGPD, en caso de que distribuyas tu herramienta en la UE.
+- Las tecnologías ya son bastante maduras, y la comunidad está prosperando. Es muy fácil encontrar buenos ejemplos en la web para todas las tecnologías que usé.
+- Mucho más flexible que Meteor, y simplificaría el intercambio de un componente cuando llegue una nueva tecnología. Aunque, la mayoría de proyectos secundarios fracasan bastante antes de que requieran una actualización tecnológica importante. Por lo tanto, el tiempo de lanzamiento al mercado sigue siendo lo más importante.
+
+## Feedback, por favooor
+
+**¿Qué opinas de este stack? ¿Alguna mejora que sugerirías?**

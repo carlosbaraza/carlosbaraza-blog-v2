@@ -1,0 +1,53 @@
+---
+title: "PaaS barato + simple + cifrado para todos tus proyectos secundarios"
+slug: cheap---simple---encrypted-paas-for-all-your-side-projects
+date_published: "1970-01-01T00:00:00.000Z"
+date_updated: "2020-07-08T01:07:48.000Z"
+tags: []
+draft: true
+summary: "¿Cuál es el problema?"
+---
+
+## ¿Cuál es el problema?
+
+Como ingeniero web, necesito un entorno semi-profesional y barato donde pueda desplegar todos mis proyectos secundarios y escalarlos si realmente lo necesito (nunca).
+
+A menudo me encontraba ralentizado y abrumado por las operaciones de infraestructura que necesitaba realizar solo para iniciar un nuevo proyecto. Crear un nuevo proyecto generalmente traía muchos pensamientos negativos inconscientes, imaginando todos los pasos de infraestructura que necesitaba completar solo para empezar: configurar VPS, configurar DNS, configurar Nginx, releer cómo configurar Nginx, configurar Let's Encrypt, preparar el entorno de producción, pagar la nueva factura aumentada... El resultado era una sensación agobiante de procrastinación.
+
+Necesitaba una plataforma que me permitiera programar algo rápidamente y desplegarlo en un entorno semi-profesional, para poder empezar a mostrárselo a mis amigos/Hacker News/Twitter/Reddit/loquesea inmediatamente.
+
+## Requisitos:
+
+- Barato: menos de $15/mes para todos mis proyectos secundarios.
+- Extremadamente simple para desplegar un nuevo proyecto: Sin operaciones de infraestructura necesarias.
+- Sin stack tecnológico impuesto. Generalmente backend Node.js + SPA en el frontend. Sin embargo, me gusta probar cosas nuevas, y por lo tanto quiero la libertad de usar cualquier lenguaje o tecnología aleatoria que haya captado mi atención ese día.
+- Cifrado TLS (gratis, por supuesto).
+- Nombres de dominio para cada proyecto.
+
+## Lo que se me ocurrió:
+
+![](/content/images/downloaded_images/Cheap---Simple---Encrypted-PaaS-for-all-your-side-projects/1-silDUZvr7KVuQODmI3ic4w.png)
+
+## Proceso para nuevo proyecto
+
+Estos son los pasos necesarios para desplegar un nuevo proyecto una vez que hayas completado la configuración inicial (más abajo).
+
+1. Crear un nuevo contenedor desde tu repositorio en GitHub o BitBucket
+1. Exponer el puerto 80.
+1. Asignarle las siguientes variables de entorno al contenedor:
+
+- LETSENCRYPT_HOST=newcoolproject.appy.land: Usado para registrar el certificado. Generalmente igual que VIRTUAL_HOST.
+- VIRTUAL_HOST=newcoolproject.appy.land: host que se usará para acceder a la aplicación.
+- LETSENCRYPT_EMAIL=myemail@appy.land: Usado para registrar el certificado. Recibirás alertas y otra información útil en este correo electrónico.
+
+Eso es todo. Has terminado. El certificado se generará automáticamente y todo el tráfico cifrado será redirigido al contenedor.
+
+---
+
+Si no usas un *CNAME comodín (\*.appy.land),* como yo. Solo necesitas apuntar un CNAME al endpoint del servicio *nginx-proxy*.
+
+![](/content/images/downloaded_images/Cheap---Simple---Encrypted-PaaS-for-all-your-side-projects/1-DAkjKjGORsBWfhBolz4_4A.png)
+
+## Configuración inicial
+
+¿Alguna vez has oído hablar de Docker Cloud? Docker Cloud te permite orquestar contenedores desde una interfaz de usuario simple.

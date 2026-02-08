@@ -1,8 +1,14 @@
 import { siteConfig } from "@/content/site-config";
 import { author } from "@/content/author";
 import { SocialIcons } from "@/components/shared/SocialIcons";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
-export function Footer() {
+interface FooterProps {
+  lang?: Locale;
+}
+
+export function Footer({ lang = "en" }: FooterProps) {
   return (
     <footer className="border-t border-border mt-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
@@ -16,8 +22,8 @@ export function Footer() {
             rss="/feed.xml"
           />
           <p className="font-sans text-sm text-muted">
-            &copy; {new Date().getFullYear()} {siteConfig.author}. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} {siteConfig.author}.{" "}
+            {t(lang, "footer.rights")}
           </p>
         </div>
       </div>

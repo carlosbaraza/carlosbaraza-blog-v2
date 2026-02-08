@@ -1,0 +1,235 @@
+---
+title: "Notas del curso de diseño de bases de datos"
+slug: database-design-course
+date_published: "2021-08-11T21:45:41.000Z"
+date_updated: "2021-08-11T21:52:14.000Z"
+tags: ["software-engineering", "notes"]
+draft: false
+images: ["/content/images/2021/08/eer-cardinality.png"]
+---
+
+## Conceptos
+
+- Entidad - Nombre de tabla (ej. user, article)
+- Atributo / Campo / Columna
+- Relación: relación entre entidades
+  - 1:1 - Uno a uno
+  - 1:N - Uno a muchos
+  - M:N - Muchos a muchos
+- Tupla / Fila / Registro / Entrada
+- Tabla / Archivo: Colección de tuplas o filas y nombres de atributos
+- Diseño de bases de datos: Proceso de diseñar tablas de datos para garantizar la integridad de los datos
+- Esquema: estructura de la base de datos
+- Claves: Usadas para garantizar unicidad. Generalmente IDs.
+- SQL: Structured Query Language (Lenguaje de Consulta Estructurado)
+  - DDL: Data definition language. Parte de SQL para definir el esquema.
+  - DML: Data management language. Parte de SQL para consultar datos.
+- Primera forma normal (1NF): [https://en.wikipedia.org/wiki/First_normal_form](https://en.wikipedia.org/wiki/First_normal_form)
+  - Columnas atómicas
+    - El valor debe ser **1 cosa**. Ej. El nombre completo debe dividirse en Nombre y Apellido
+  - **Columnas singulares**
+    - Ej. "películas favoritas" no funcionaría porque podrías almacenar múltiples elementos en el mismo campo.
+  - **Ninguna columna de tabla puede tener tablas como valores**. La mayoría de los RDBMS aplican 1NF. Los sistemas NoSQL permiten que un atributo tenga relaciones y subvalores.
+- Padre / Hijo:
+  - En una relación, siempre hay un padre y un hijo
+  - Padre: Tiene Clave Primaria (PK)
+  - Hijo: Tiene Clave Foránea (FK)
+- Tabla intermediaria / Tabla de unión:
+  - Para implementar relaciones M:N
+- Relaciones binarias:
+  - Generalmente, las relaciones son entre dos entidades.
+  - Podrían ser entre más de dos entidades
+- Índice:
+  - Un índice de base de datos es una estructura de datos que mejora la velocidad de las operaciones de recuperación de datos en una tabla de base de datos a costa de escrituras adicionales y espacio de almacenamiento para mantener la estructura de datos del índice. [https://en.wikipedia.org/wiki/Database_index](https://en.wikipedia.org/wiki/Database_index)
+- Tabla de búsqueda
+  - En lugar de repetir una membresía como oro, plata, etc. Tener una segunda tabla y referenciarla. Una especie de tablas Enum.
+  - user:
+    - | membership_id |
+  - membership:
+    - | id | membership |
+
+## Claves
+
+- Superclave: Cualquier número de columnas que crean una clave única combinando los valores
+  - Hay muchas combinaciones de columnas que crean una clave única, por lo que hay muchas superclaves.
+- Clave candidata: Superclave con el menor número de columnas
+  - Podría tener muchas claves candidatas: email, username, ID.
+- Clave primaria:
+  - Única
+  - Nunca cambia
+  - Nunca nula
+- Clave alternativa
+  - Única, nunca cambia, nunca nula.
+  - Otras claves candidatas que no son la primaria
+- Clave subrogada: Clave que se crea para garantizar unicidad, en oposición a las claves naturales. Ej. user_id.
+  - Podría ser autoincremental o UUID
+  - Las subrogadas generalmente no se comparten con el usuario. Porque si compartes el ID, comienza a ganar significado y se convierte en una clave natural.
+- Clave natural: Clave que ocurre naturalmente en los datos. Ej. username podría ser una clave natural.
+- Clave subrogada vs Clave natural:
+  - Generalmente es más fácil usar claves subrogadas que claves naturales
+    - No hay que preocuparse por los cambios en los datos, porque serán únicas
+  - Sé consistente y siempre usa claves subrogadas o naturales
+- Clave foránea:
+  - Referencia a una clave primaria de una tabla diferente
+  - NOT NULL: para requerir y asegurar que hay una relación
+  - Restricciones
+  - Restricciones de clave foránea
+    - ON UPDATE (si la clave foránea en el padre cambia)
+      - CASCADE: Actualizar la clave foránea para reflejar el cambio
+      - RESTRICT (NO ACTION): Restringir el cambio en la tabla padre
+      - SET NULL: Establecer NULL en la columna de clave foránea
+    - ON DELETE (si la fila con la clave primaria referenciada en la clave foránea es eliminada)
+      - CASCADE: Eliminar la fila con la clave foránea
+      - RESTRICT (NO ACTION): Restringir el cambio en la tabla padre
+      - SET NULL: Establecer NULL en la columna de clave foránea
+    - RESTRICT vs NO ACTION: En Postgres, la diferencia entre RESTRICT y NO ACTION solo surge cuando defines una restricción como `DEFERRABLE` con un modo `INITIALLY DEFERRED` o `INITIALLY IMMEDIATE`. [https://www.postgresql.org/docs/current/sql-set-constraints.html](https://www.postgresql.org/docs/current/sql-set-constraints.html)
+- Clave simple: Una columna
+- Clave compuesta: Múltiples columnas
+- Clave compuesta (compound): Igual que las claves compuestas. Normalmente se usan indistintamente, pero es mejor usar Clave compuesta (composite). Las claves compound generalmente tienen todos los atributos siendo claves de otras entidades (ej. relaciones muchos a muchos). [https://dba.stackexchange.com/questions/3134/in-sql-is-it-composite-or-compound-keys](https://dba.stackexchange.com/questions/3134/in-sql-is-it-composite-or-compound-keys)
+
+### Integridad de datos
+
+- Integridad de entidad: Garantizar unicidad en cada entidad. Generalmente se resuelve con una columna ID.
+- Integridad relacional / Integridad referencial: Generalmente gestionada por el RDBMS para asegurar que las relaciones existan y sean seguras.
+  - Las claves foráneas deben tener restricciones
+- Integridad de dominio: Los datos son válidos y siguen el tipo esperado. Parcialmente resuelto con tipos. Agregar validaciones también ayudaría.
+
+## Convención de nombres
+
+- Todo en minúsculas
+  - Ej. user, en lugar de User
+- Nombre de entidad en singular
+  - Ej. user, article
+- Guiones bajos para separar palabras de entidades
+  - Ej. card_payment en lugar de CardPayment
+- Nombrar las columnas ID con el nombre de la tabla: Ej. la tabla "user" tiene "user_id". De esta manera, todas las tablas que referencien user_id tendrían el mismo nombre para ello, incluyendo la tabla "user".
+
+## Relaciones de Base de Datos
+
+- Uno a uno
+- Uno a muchos
+- Muchos a muchos
+
+### Relación uno a uno (1:1)
+
+Podría ser:
+
+- **Atributo**
+  - Si solo se necesita un dato para definir la entidad.
+  - Ej. username: text
+- **Clave foránea a otra tabla**
+  - Si tienes más de un atributo para la misma entidad
+    - Ej. Número de tarjeta, nombre de tarjeta, fecha de emisión de tarjeta, etc.
+  - Agregar clave foránea en la tabla padre
+    - | user | card_id |
+    - | card |
+
+### Relación uno a muchos (1:N)
+
+- Agregar clave foránea a la tabla hijo
+  - | user |
+  - | card | user_id |
+
+### Relación muchos a muchos (M:N)
+
+- Crear una tabla Intermediaria / de Unión:
+  - | user |
+  - | user_id | card_id |
+  - | card |
+
+## Modelado de relaciones entre entidades
+
+Estándar para dibujar esquemas
+
+- Modelo ER: [Modelo entidad-relación](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model)
+  - ERD: diagrama de relación de entidades
+- Modelo EER: [Modelo entidad-relación mejorado](https://en.wikipedia.org/wiki/Enhanced_entity%E2%80%93relationship_model)
+- Cardinalidad:
+  - Múltiples líneas representan Muchos
+  - Una línea vertical representa 1
+- Modalidad:
+  - Un 0 representa que la clave foránea puede ser nula, por lo que podría haber filas que no tengan un padre.
+    - Se lee como 0 o 1.
+  - Una línea representa 1. Se lee como 1 o 1 cuando se muestran dos líneas verticales. Significa que la clave foránea tiene una restricción NOT NULL.
+
+<figure>
+<img alt="FocusKeep screenshot" src="/content/images/2021/08/eer-cardinality.png" />
+<figcaption>Cardinalidad</figcaption>
+</figure>
+
+<figure>
+<img alt="Modality" src="/content/images/2021/08/eer-modality.png" />
+<figcaption>Modalidad</figcaption>
+</figure>
+
+## Normalización
+
+- 1NF: Primera forma normal
+  - Hacer todo atómico
+  - Una relación está en primera forma normal si y solo si ningún dominio de atributo tiene relaciones como elementos.
+  - Básicamente, si un campo tiene múltiples valores, debe dividirse en dos tablas.
+    - | user_id |
+    - | email_id | email | user_id (fk) | (esto permite múltiples emails)
+- 2NF: Segunda forma normal
+  - Eliminar dependencias parciales
+  - Una relación está en 2NF si está en 1NF.
+  - No hay dependencias parciales para la relación.
+  - Ej.
+    - user: | user_id |
+    - book_author: | book_id | user_id | book_summary (incorrecto porque depende del book_id) |
+    - book: | book_id | title |
+- 3NF: Tercera forma normal
+  - Eliminar dependencias transitivas
+  - Ej. mal diseño:
+    - | review_id | stars | stars_meaning |
+    - El significado de estrellas cambia con las estrellas, así que depende de algo que no es una clave
+  - Ej. mejor diseño:
+    - | review_id | star_id |
+    - | star_id | stars | stars_meaning |
+
+## Índices
+
+- Agrupado (Clustered)
+  - Reorganiza los datos
+  - Solo puede haber uno
+- No agrupado (Non clustered)
+  - Apunta a los datos
+  - Ej. índice al final del libro
+  - Puede haber múltiples
+- Compuesto (Composite)
+  - Índice en múltiples columnas
+
+Ventajas:
+
+- Consultas más rápidas
+
+Desventajas:
+
+- Almacenamiento y memoria
+- Necesidad de actualizar el índice cuando ocurren cambios en los datos. Las escrituras son más lentas.
+
+## Joins
+
+- [https://en.wikipedia.org/wiki/Join_(SQL)](https://en.wikipedia.org/wiki/Join_(SQL))
+- INNER JOIN (JOIN por defecto)
+  - Join por defecto entre dos tablas
+  - Solo devuelve las filas que coinciden con la condición en ambas tablas
+- Outer joins
+  - Incluyen todas las columnas que no coinciden con una en la tabla unida, incluyendo valores nulos.
+  - Cuando la columna unida es una clave foránea y NOT NULL, los outer joins devolverían lo mismo que los inner joins.
+  - Tipos:
+    - Left outer join (por defecto): Incluye todas las filas no coincidentes de la tabla izquierda
+    - Right outer join: Incluye todas las filas no coincidentes de la tabla derecha
+    - Full outer join: Incluye las filas no coincidentes de todas las tablas
+- Self join:
+  - Unir una tabla consigo misma
+  - Por ejemplo:
+    - | user_id | name | referred_by |
+    - Self join en referred_by para encontrar al usuario y la referencia
+
+```sql
+SELECT u1.name, u2.name AS "referred_by"
+FROM user AS u1
+INNER JOIN user AS u2
+ON u1.referred_by = u2.user_id
+```

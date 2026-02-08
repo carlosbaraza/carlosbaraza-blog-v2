@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { BlogPost } from "@/lib/types";
+import type { Locale } from "@/lib/i18n";
+import { localePath } from "@/lib/i18n";
 import { formatDate } from "@/lib/utils";
 import { TagBadge } from "./TagBadge";
 import { NoiseDistortionImage } from "@/components/shared/NoiseDistortionImage";
@@ -9,6 +11,7 @@ import placeholderImage from "@/../public/images/placeholder.png";
 interface PostCardProps {
   post: BlogPost;
   featured?: boolean;
+  lang?: Locale;
 }
 
 function CardImage({ src, alt }: { src?: string; alt: string }) {
@@ -36,13 +39,14 @@ function CardImage({ src, alt }: { src?: string; alt: string }) {
   );
 }
 
-export function PostCard({ post, featured = false }: PostCardProps) {
+export function PostCard({ post, featured = false, lang = "en" }: PostCardProps) {
   const imageUrl = post.images?.[0];
+  const postHref = localePath(`/blog/${post.slug}`, lang);
 
   if (featured) {
     return (
       <article className="group">
-        <Link href={`/blog/${post.slug}`} className="block">
+        <Link href={postHref} className="block">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
             <NoiseDistortionImage groupHover className="relative aspect-[16/9] overflow-hidden rounded-[50px] bg-surface">
               <CardImage src={imageUrl} alt={post.title} />
@@ -53,7 +57,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
                 dateTime={post.datePublished}
                 className="font-sans text-xs uppercase tracking-wider text-muted mb-3"
               >
-                {formatDate(post.datePublished)}
+                {formatDate(post.datePublished, lang)}
               </time>
 
               <h3 className="font-display text-3xl sm:text-4xl font-bold leading-[1.15] tracking-tight text-text group-hover:text-accent transition-colors mb-4">
@@ -82,7 +86,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 
   return (
     <article className="group">
-      <Link href={`/blog/${post.slug}`} className="block">
+      <Link href={postHref} className="block">
         <NoiseDistortionImage groupHover className="relative aspect-[4/3] overflow-hidden rounded-sm bg-surface mb-4">
           <CardImage src={imageUrl} alt={post.title} />
         </NoiseDistortionImage>
@@ -91,7 +95,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           dateTime={post.datePublished}
           className="font-sans text-xs uppercase tracking-wider text-muted"
         >
-          {formatDate(post.datePublished)}
+          {formatDate(post.datePublished, lang)}
         </time>
 
         <h3 className="font-display text-xl sm:text-2xl font-bold leading-snug tracking-tight text-text group-hover:text-accent transition-colors mt-2 mb-2">

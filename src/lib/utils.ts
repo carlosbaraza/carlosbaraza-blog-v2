@@ -1,8 +1,10 @@
 import type { BlogPost } from "./types";
+import type { Locale } from "./i18n";
+import { toDateLocale } from "./i18n";
 
-export function formatDate(iso: string): string {
+export function formatDate(iso: string, locale: Locale = "en"): string {
   const date = new Date(iso);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(toDateLocale(locale), {
     year: "numeric",
     month: "long",
     day: "numeric",

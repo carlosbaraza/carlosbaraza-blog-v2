@@ -1,0 +1,45 @@
+---
+title: "aws4curl"
+slug: aws4curl
+date_published: "2019-04-11T20:25:00.000Z"
+date_updated: "2020-07-07T20:26:19.000Z"
+tags: ["open-source", "software-engineering"]
+draft: false
+summary: "curl, pero con AWS Signature Version 4"
+---
+
+Todo el código está disponible en [carlosbaraza/aws4curl](https://github.com/carlosbaraza/aws4curl).
+
+## aws4curl
+
+[![Build Status](https://travis-ci.org/carlosbaraza/aws4curl.svg?branch=master)](https://travis-ci.org/carlosbaraza/aws4curl)
+
+`curl`, pero con AWS Signature Version 4
+
+## Instalación
+
+```
+npm i -g aws4curl
+```
+
+## Uso
+
+```
+usage: aws4curl [aws4curl options] [curl options]
+
+aws4curl options:
+  --aws-region AWS Region to sign requests with (required)
+  --aws-service AWS Service (required)
+
+AWS Credentials:
+Environment variables AWS_ACCESS_KEY and AWS_SECRET_KEY must be defined.
+If AWS_SESSION_TOKEN is available, it will be used to generate the header
+"X-Amz-Security-Token"
+
+curl options:
+  Every flag and argument will be passed to your installed curl
+```
+
+## Contribuir
+
+¡Gracias por echar un vistazo a este proyecto! El proyecto tiene licencia MIT y toda contribución es bienvenida.

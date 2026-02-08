@@ -1,0 +1,55 @@
+---
+title: "Parámetros opcionales y parámetros por defecto (>=Ruby 1.9)."
+slug: optional-parameters-and-default-parameters----ruby-1-9--
+date_published: "2014-04-17T00:00:00.000Z"
+date_updated: "2014-04-17T00:00:00.000Z"
+tags: []
+draft: false
+summary: "¿Entiendes completamente qué pasará si defino un método como este?"
+---
+
+¿Entiendes completamente qué pasará si defino un método como este?
+
+**Nota:** Esta definición de método fallará en *Ruby 1.8.7* o inferior, ya que no está permitido listar parámetros opcionales en medio de la lista (El último parámetro "e" debería moverse a algún lugar antes del parámetro opcional "*p" y los parámetros con valor por defecto).
+
+Si luego llamamos al método en irb:
+
+```
+# Can not call with less parameters than the number of mandatory parameters
+irb(main):009:0> my_method(1,2)
+ArgumentError: wrong number of arguments (2 for 3+)
+  from (irb):1:in `my_method'
+  from (irb):9
+  from /usr/bin/irb:12:in `<main>'
+
+# First mandatory parameters are assigned
+irb(main):010:0> my_method(1,2,3)
+a: 1, b: 2, c: 15, d: 35, p: [], e: 3
+
+# Then the first default-valued parameter gets a value.
+irb(main):011:0> my_method(1,2,3,4)
+a: 1, b: 2, c: 3, d: 35, p: [], e: 4
+
+# Then both default-valued parameters get a value.
+irb(main):012:0> my_method(1,2,3,4,5)
+a: 1, b: 2, c: 3, d: 4, p: [], e: 5
+
+# Finally the optional parameter get values within an Array object. irb(main):013:0> my_method(1,2,3,4,5,6)
+a: 1, b: 2, c: 3, d: 4, p: [5], e: 6
+
+irb(main):014:0> my_method(1,2,3,4,5,6,7)
+a: 1, b: 2, c: 3, d: 4, p: [5, 6], e: 7
+```
+
+Entonces, para resumir, el orden en que Ruby asigna los parámetros es:
+
+1. Parámetros obligatorios. En nuestro caso 'a', 'b' y 'e'
+2. Parámetros con valor por defecto, pero manteniendo el orden de la definición del método. Si el último parámetro definido es obligatorio, el último parámetro dado en la llamada al método será el valor del último parámetro obligatorio, no del primer parámetro con valor por defecto.
+3. Finalmente, si todos los parámetros (obligatorios y con valor por defecto) tienen un valor, todos los siguientes valores dados se incluirán en el Array del parámetro opcional ('p' en nuestro caso).
+
+Como nota final, hay dos cosas que causarán un error de sintaxis:
+
+- Más de un parámetro opcional en la definición de un método.
+- Parámetro con valor por defecto listado después del parámetro opcional.
+
+*¡Salud y feliz programación en Ruby!*

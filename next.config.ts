@@ -60,17 +60,17 @@ const changedSlugs: [string, string][] = [
 const nextConfig: NextConfig = {
   output: "standalone",
   async redirects() {
-    // Standard redirects: /{slug} -> /blog/{slug}
+    // Standard redirects: /{slug} -> /en/blog/{slug}
     const blogRedirects = publishedSlugs.map((slug) => ({
       source: `/${slug}`,
-      destination: `/blog/${slug}`,
+      destination: `/en/blog/${slug}`,
       permanent: true,
     }));
 
     // Extra redirects for old slugs that changed during migration
     const changedSlugRedirects = changedSlugs.map(([oldSlug, newSlug]) => ({
       source: `/${oldSlug}`,
-      destination: `/blog/${newSlug}`,
+      destination: `/en/blog/${newSlug}`,
       permanent: true,
     }));
 
@@ -79,7 +79,7 @@ const nextConfig: NextConfig = {
       ...changedSlugRedirects,
       {
         source: "/resume",
-        destination: "/about",
+        destination: "/en/about",
         permanent: true,
       },
     ];

@@ -1,0 +1,76 @@
+---
+title: "Stoic Journal: iOS and Android React Native app."
+slug: stoic-journal
+date_published: "2020-02-27T19:57:00.000Z"
+date_updated: "2020-07-08T19:08:34.000Z"
+tags: ["side-hustle", "open-source", "software-engineering"]
+draft: false
+summary: "Build and publish an app in one week. iOS and Android. React Native. An altruistic act can still get internet hate."
+images: ["/content/images/2020/07/stoic-journal-banner.png"]
+---
+
+![Stoic Journal Logo](/content/images/2020/07/stoic-journal-banner.png)
+
+Lately, and following a distressful situation, I discovered the [stoic practices](https://en.wikipedia.org/wiki/Stoicism) through some interesting books on the topic like "A Guide to the Good Life: The Ancient Art of Stoic Joy" (really good book). I read other classics like Marco Aurelius and Seneca.
+
+After all this knowledge absorption, it was time to put it into practice. I decided to start practicing some of these teachings by keeping a daily journal of my progress.
+
+However, I found that there was no app that fit my specific needs, so I did what I do best, which is building a product. This time, I decided to build an iOS and Android app in maximum one week.
+
+For this project, I chose React Native, as I already know web, JavaScript and React pretty well. The project was completed successfully and published to both app stores.
+
+The entire codebase is open sourced and you can find it in at [carlosbaraza/stoic-journal](https://github.com/carlosbaraza/stoic-journal).
+
+## The app is actually being used!
+
+Without any kind of promotion, I got some user to download the app. This is an interesting thing, given that I put zero effort in promoting the application, apart from publishing it to the marketplaces.
+
+![Android active users](/content/images/2020/07/Screenshot-2020-07-08-at-20.08.11.png)
+
+## Unexpected feedback
+
+I never intended this project to be used by anyone but me, but I published it just in case other people would find it useful.
+
+![Feedback on Apple App Store](/content/images/2020/07/Screenshot-2020-07-08-at-19.46.18.png)
+
+![Feedback on Android Play Store](/content/images/2020/07/Screenshot-2020-07-08-at-19.50.30.png)
+
+## People are ruthless
+
+This is the main take away from this altruistic experiment, some people will hammer you with negative feedback, even when you give them free things and time.
+
+As an example, check out these two reviews:
+
+![Negative feedback happens](/content/images/2020/07/Screenshot-2020-07-08-at-19.53.24.png)
+
+## Apple App Store
+
+[Stoic Journal in the Apple App Store](https://apps.apple.com/us/app/stoic-journal/id1500807777)
+
+Become a better version of yourself
+
+- Keep track of your moral and personal progress
+- Make Chrysippus proud
+- Daily questions
+- Secure journal, your data will never leave your phone
+- Learn about stoicism
+
+<figure>
+<img src="/content/images/2020/07/Screenshot-2020-07-08-at-19.44.31.png" alt="Apple App store listing" />
+<figcaption>Apple App store listing</figcaption>
+</figure>
+
+## Android Play Store
+
+[Stoic Journal - Daily ethical notes - Apps on Google Play](https://play.google.com/store/apps/details?id=com.baraza.stoicjournal)
+
+## Dedicated landing page
+
+[https://stoicjournal.baraza.io/](https://stoicjournal.baraza.io/)
+
+## Lessons learned
+
+- It is good to build quick and deliver fast.
+- Building things that you are interested in resonates better with the audience.
+- There will always be haters. It is important to be extra clear that this is an altruistic act to slightly deter them.
+- Free of charge still requires maintenance, which takes time and is not free.

@@ -1,0 +1,32 @@
+---
+title: "TypeScript: String a Number"
+slug: typescript-string-to-number
+date_published: "2021-05-16T23:41:38.000Z"
+date_updated: "2021-05-16T23:41:38.000Z"
+tags: ["software-engineering"]
+draft: false
+images: ["/content/images/2021/05/number-parsing-comparison.png"]
+---
+
+Este artículo es parte de mi serie de TypeScript. Por favor, considera suscribirte a mi boletín para consejos sobre programación, emprendimiento y diseño.
+
+He notado [múltiples](https://stackoverflow.com/questions/14667713/how-to-convert-a-string-to-number-in-typescript) [preguntas](https://stackoverflow.com/questions/23437476/in-typescript-how-to-check-if-a-string-is-numeric) sobre cómo convertir un valor String a un Number usando TypeScript.
+
+La respuesta es que puedes convertir String a Numbers de la misma manera que en JavaScript, usando `parseInt("42")`, `parseFloat("42")`, `+"42"` o `Number("42")`.
+
+```typescript
+const numberString: string = "42";
+
+const number: number = parseInt(numberString);
+const number: number = parseFloat(numberString);
+const number: number = +numberString;
+const number: number = Number(numberString);
+```
+
+Múltiples enfoques devuelven el mismo tipo number al analizar un string numérico
+
+[Esta respuesta de StackOverflow](https://stackoverflow.com/questions/17106681/parseint-vs-unary-plus-when-to-use-which/17106702#17106702) compara una multitud de métodos alternativos:
+
+![](/content/images/2021/05/number-parsing-comparison.png)
+
+Finalmente, considera suscribirte a mi boletín o seguirme en Twitter [@carlosbaraza](https://twitter.com/carlosbaraza).

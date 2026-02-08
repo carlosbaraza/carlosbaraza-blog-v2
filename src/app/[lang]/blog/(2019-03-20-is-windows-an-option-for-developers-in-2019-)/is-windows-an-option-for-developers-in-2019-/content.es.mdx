@@ -1,0 +1,76 @@
+---
+title: "¿Es Windows una opción para desarrolladores web en 2019?"
+slug: is-windows-an-option-for-developers-in-2019-
+date_published: "2019-03-20T00:00:00.000Z"
+date_updated: "2021-06-12T20:31:53.000Z"
+tags: ["rant"]
+draft: false
+summary: "Como probablemente sabéis, los desarrolladores son una tribu social conocida por usar MacBooks con pegatinas. Hay múltiples razones..."
+images: ["/content/images/downloaded_images/Is-Windows-an-option-for-developers-in-2019-/1-c5ch8FSmmEqjjzSISSLhNw.jpeg"]
+---
+
+![](/content/images/downloaded_images/Is-Windows-an-option-for-developers-in-2019-/1-c5ch8FSmmEqjjzSISSLhNw.jpeg)
+
+Ubuntu ejecutándose en WSL (Windows Subsystem for Linux)
+
+*TL;DR: Sí...n...sí, pero por favor sigue leyendo.*
+
+Como probablemente sabéis, los desarrolladores son una tribu social conocida por usar MacBooks con pegatinas. Hay múltiples razones para esto, pero la principal, en mi opinión, es que OSX es un sistema operativo compatible con POSIX, lo que significa que es muy similar a GNU/Linux o UNIX.
+
+El 98% de los servidores web son servidores GNU/Linux según [W3Cook](https://web.archive.org/web/20151004225123/http://www.w3cook.com:80/os/summary). Como declaró Linus Torvalds [aquí sobre la disputa x86 vs ARM](https://www.realworldtech.com/forum/?threadid=183440&curpostid=183486), los desarrolladores quieren desarrollar en un entorno similar al que ejecutará el despliegue en producción del programa. OSX no es GNU/Linux, pero su propuesta de valor única ha sido tradicionalmente una combinación de:
+
+- Entorno tipo UNIX
+- Herramientas comerciales (p. ej. Adobe Suite, que no está disponible para GNU/Linux)
+- Ordenadores altamente estables orientados a profesionales
+
+## ¿Qué pasa con Windows?
+
+Windows ha sido tradicionalmente un entorno de desarrollo difícil, excepto si programas para Windows (p. ej. industria de videojuegos o .NET). Si tu trabajo dependía de NodeJS, Python, Ruby, Docker, Bash u otras muchas herramientas, trabajar con Windows era una pesadilla. Podías hacerlo arrancando en dual boot con Linux o usando una VM de Linux, pero era problemático y no una experiencia cómoda.
+
+Microsoft se dio cuenta de que esto era un problema y en 2016 lanzaron WSL (Windows Subsystem for Linux). En pocas palabras, escribieron un pequeño kernel de Linux que se ejecuta sobre el sistema operativo Windows. Después podías instalar tu distribución favorita sobre Windows, y se integraba bastante bien con el resto del sistema operativo.
+
+## ¿Está WSL realmente listo para desarrolladores?
+
+Recientemente compré una máquina de altas prestaciones ([Razer Blade 15 con i7-8750H y RTX 2080 US](https://amzn.to/2Ye533d), [enlace UK](https://amzn.to/2JrBQhN)) por 2/3 del precio de un MacBook Pro y me embarqué en la búsqueda de una gran experiencia de desarrollo. Puedes seguir el progreso en [mi repositorio de dotfiles](https://github.com/carlosbaraza/dotfiles).
+
+Lo probé durante 2 semanas, y mi conclusión es que puedes usarlo totalmente para desarrollo.
+
+Pero... fue doloroso.
+
+## ¿Recomendaría a la mayoría de los desarrolladores migrar a Windows?
+
+No, y la razón es simple. Si quieres una experiencia fluida con cualquier cosa, deberías ceñirte al camino más común de los usuarios porque ha sido probado con el tiempo.
+
+A menos que la mayoría de los desarrolladores empiecen a migrar a Windows, seguirá siendo doloroso y te ralentizará. En última instancia, la programación es nuestro trabajo, y una hora perdida depurando un problema relacionado con Windows/WSL es una hora por la que no te pagaron o una hora que podrías haber invertido en tareas más productivas.
+
+## Los problemas más molestos que encontré
+
+- Estás solo... Ninguno de tus compañeros habrá encontrado tus problemas y la mayoría de las guías están escritas con OSX/Linux en mente, no tu configuración personalizada de WSL.
+- Nunca sabes si un problema está relacionado con Windows, con Linux, o incluso con algún software ejecutándose en Windows como el Firewall de Windows Defender.
+- Atajos de teclado... Suena estúpido, y probablemente te acostumbrarías después de un tiempo. Como ingeniero de software, tus atajos de teclado son muy importantes para la productividad. Era muy molesto darse cuenta de que no copiaste el texto porque no usaste ctrl o necesitas usar la tecla fin, re pág, av pág para moverte por los documentos de texto. La lista de atajos que cambian es bastante larga y encontré que esto era una ralentización masiva. Terminé usando [un script de AutoHotkey para mapear todas las teclas de mi Magic Keyboard a equivalentes de Windows](https://github.com/carlosbaraza/dotfiles/blob/master/windows/magic-keyboard.ahk).
+- Falta de aceleración GPU en WSL (la función más solicitada de WSL). Una de las razones de mi migración a Windows era el Deep Learning. Apple no incluye tarjetas Nvidia en los MacBooks, y la mayoría de las bibliotecas de Machine Learning están optimizadas usando Cuda, que es el SDK propietario de programación de tarjetas gráficas de Nvidia. Sin embargo, mi sorpresa fue que WSL no soporta aceleración GPU, así que solo puedes ejecutar bibliotecas compiladas para Windows. Muchas bibliotecas como OpenAI gym no soportan Windows, así que al final, Windows resultó ser bastante inútil y se requería un arranque dual con GNU/Linux.
+- VSCode no está completamente integrado con WSL y muchas extensiones dan problemas, así que terminé ejecutando VSCode en WSL usando un XServer. Pero entonces, la experiencia no era tan pulida.
+- Duplicación... básicamente necesitas duplicar gran parte de tu configuración. Por ejemplo, necesitas configurar GIT en WSL y en Windows. De alguna manera, gestionar WSL se siente un poco como gestionar una VM y no está completamente integrado con Windows.
+- WSL puede leer archivos de Windows, pero Windows no puede leer archivos de WSL o aparecerán errores si intentas hacerlo.
+- Los emuladores de terminal son inestables, lentos o poco pulidos. Probé muchos emuladores de terminal y ninguno funciona tan bien como iTerm2 para OSX. Terminé usando ConEMU e Hyper, pero ninguno me satisface realmente.
+- Errores. Hay muchos errores relacionados con WSL. Por ejemplo, encontré uno ejecutando NVM (Node version manager), que a veces detenía completamente la inicialización de la sesión de terminal. Lo solucioné retrasando la carga de NVM [hasta que necesitara Node](https://github.com/carlosbaraza/dotfiles/blob/master/windows/.zshrc#L20-L40). Sin embargo, me tomó varias horas averiguar qué pasaba, depurando todos los scripts que se ejecutaban en mi .zshrc.
+- El soporte de pantallas de alto DPI en Windows es pésimo. Tengo una pantalla 4k y todo se ve muy pequeño. Hay una opción de Accesibilidad para aumentar el tamaño de las ventanas. Sin embargo, cuando lo haces, la mayoría de las aplicaciones se ven muy borrosas y es aún más molesto.
+- El texto se renderiza muy mal en Windows, creando una especie de aberración cromática a su alrededor. Viniendo de un Apple MacBook, esto resultó ser bastante molesto, porque no sabía si mi diseño se veía mal o si era Windows el que lo estropeaba.
+
+![](/content/images/downloaded_images/Is-Windows-an-option-for-developers-in-2019-/1-uQrOtlvdq5F3Bi4PV86OHw.png)
+
+Texto renderizado pobremente en Windows (p. ej. las líneas verticales tienen una extraña "aberración cromática")
+
+- [Chocolatey](https://chocolatey.org/) de Windows es mejor que no tener ningún gestor de dependencias por línea de comandos, pero [Homebrew](https://brew.sh/) es un software más sólido. A Chocolatey le faltan muchos paquetes y muchos otros paquetes se publican múltiples veces con diferentes nombres. El versionado es bastante inconsistente también. Múltiples veces terminé instalando software con los instaladores de interfaz gráfica.
+
+## Nota final
+
+Microsoft ha hecho grandes esfuerzos para satisfacer las necesidades de los desarrolladores y creadores, pero a fecha de 2019, creo que OSX sigue siendo una opción más fuerte para los desarrolladores.
+
+Decidí volver a mi MacBook Pro 2015 y usar un proveedor en la nube para mis experimentos de Machine Learning.
+
+La buena noticia es que todavía hay margen de mejora, y sabemos que Microsoft está trabajando en ello, así que esto podría cambiar en 2020.
+
+Mientras tanto, si quieres probarlo, puedes echar un vistazo a [mis dotfiles, donde intenté documentar mi progreso en este intento.](https://github.com/carlosbaraza/dotfiles)
+
+*P.D. **Desafortunadamente** y **sin querer**, me metí en la guerra Windows vs OSX. De ninguna manera soy un fanboy de Apple, soy simplemente un desarrollador práctico que quiere hacer su trabajo lo más eficientemente posible. Y este artículo es una reflexión sobre mi propia experiencia intentando migrar de OSX a Windows.*

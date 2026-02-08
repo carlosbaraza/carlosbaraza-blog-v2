@@ -3,8 +3,14 @@ import { author } from "@/content/author";
 import { SocialIcons } from "@/components/shared/SocialIcons";
 import { Logo } from "@/components/shared/Logo";
 import heroImage from "@/../public/images/placeholder.png";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  lang?: Locale;
+}
+
+export function HeroSection({ lang = "en" }: HeroSectionProps) {
   return (
     <section>
       <div className="max-w-5xl mx-auto">
@@ -36,8 +42,7 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto text-center mb-16">
         <Logo className="h-10 sm:h-14 mx-auto mb-4" />
         <p className="font-serif text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto mb-6">
-          Writing about agentic coding workflows, AI strategy, and building
-          products. CTO, engineer, and occasional woodworker.
+          {t(lang, "hero.tagline")}
         </p>
         <SocialIcons
           github={author.github}

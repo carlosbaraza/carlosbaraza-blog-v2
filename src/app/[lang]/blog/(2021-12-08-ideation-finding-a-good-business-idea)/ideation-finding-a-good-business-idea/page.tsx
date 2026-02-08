@@ -1,0 +1,48 @@
+import type { Metadata } from "next";
+import { PostLayout } from "@/components/blog/PostLayout";
+import { MdxContent } from "@/components/blog/MdxContent";
+import { getPostContent } from "@/lib/mdx";
+import { isValidLocale } from "@/lib/i18n";
+import { post } from "./meta";
+import heroImage from "./hero.png";
+
+interface PageProps {
+  params: Promise<{ lang: string }>;
+}
+
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { lang: langParam } = await props.params;
+  const lang = isValidLocale(langParam) ? langParam : ("en" as const);
+  const t = post.translations?.[lang];
+  const title = t?.title ?? post.title;
+  const description = t?.summary ?? post.summary;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime: post.datePublished,
+      modifiedTime: post.dateUpdated,
+      images: post.images,
+    },
+  };
+}
+
+export default async function IdeationFindingAGoodBusinessIdea(props: PageProps) {
+  const { lang: lp } = await props.params;
+  const lang = isValidLocale(lp) ? lp : ("en" as const);
+  const content = await getPostContent(post.slug, lang);
+
+  return (
+    <PostLayout post={post} heroImage={heroImage} lang={lang}>
+      {content ? (
+        <MdxContent source={content} />
+      ) : (
+        <p>Content not available.</p>
+      )}
+    </PostLayout>
+  );
+}

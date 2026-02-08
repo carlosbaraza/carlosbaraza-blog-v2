@@ -3,12 +3,15 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
+import type { Locale } from "@/lib/i18n";
+import { localePath } from "@/lib/i18n";
 
 interface MobileNavProps {
   links: { href: string; title: string }[];
+  lang?: Locale;
 }
 
-export function MobileNav({ links }: MobileNavProps) {
+export function MobileNav({ links, lang = "en" }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -82,7 +85,7 @@ export function MobileNav({ links }: MobileNavProps) {
               {links.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={localePath(link.href, lang)}
                     onClick={handleClose}
                     className="block font-sans text-sm font-medium uppercase tracking-wider text-text-secondary hover:text-text transition-colors py-1"
                   >

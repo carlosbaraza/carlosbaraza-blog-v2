@@ -1,0 +1,47 @@
+---
+title: "¿Debería comprar en la caída?"
+slug: should-i-buy-the-dip
+date_published: "2020-10-21T20:40:25.000Z"
+date_updated: "2020-10-22T10:22:04.000Z"
+tags: ["finance"]
+draft: false
+images: ["/content/images/2020/10/index-strategies.jpg"]
+---
+
+Durante bastante tiempo he estado monitorizando los mercados y esperando una caída para invertir mi efectivo. Sin embargo, hace unas semanas decidí poner esta suposición a prueba. ¿Es comprar en la caída lo mejor que podría hacer con el dinero que tanto me costó ganar?
+
+## El contexto
+
+- Como la mayoría de los empleados, tengo un salario y algunos ingresos disponibles anuales para dedicar a mis ahorros o inversiones a largo plazo. Concretamente, tengo alrededor de **£20000 al año para dedicar a mis inversiones**.
+- Decidí **invertir solo en índices**, porque me quemé con acciones individuales (y criptomonedas) varias veces (es decir, soy un terrible inversor).
+- **Solo inversiones a largo plazo**. Monitorizar el mercado diaria/horariamente es un enorme desgaste de energía y tiempo que podría dedicar a generar más efectivo para invertir.
+
+## Los escenarios
+
+- Comprar diariamente la misma cantidad (Estrategia intensiva de [promedio de coste en dólares](https://www.investopedia.com/terms/d/dollarcostaveraging.asp))
+- Comprar mensualmente la misma cantidad (Estrategia simple de [promedio de coste en dólares](https://www.investopedia.com/terms/d/dollarcostaveraging.asp))
+- Comprar anualmente la misma cantidad (Estrategia extremadamente simple de [promedio de coste en dólares](https://www.investopedia.com/terms/d/dollarcostaveraging.asp))
+- Comprar en la caída (Mi propia *estrategia-basura-de-esperar-y-gastar-un-montón-de-tiempo-monitorizando*)
+
+Usé Python + [la librería Backtrader](https://github.com/mementum/backtrader) para simular mis escenarios, y estos fueron los resultados invirtiendo en el ETF SPY, ignorando las comisiones porque mi bróker ofrece transacciones sin comisión.
+
+![](/content/images/2020/10/index-strategies.jpg)
+
+## Conclusión
+
+Este experimento fue bastante revelador para mí, porque me demostró que el retorno de inversión (ROI) de dedicar 27 años monitorizando los mercados diariamente podría fácilmente ser negativo, comparado con una estrategia pasiva como el promedio de coste en dólares mensual en el SPY.
+
+Si el historial de rendimientos pasados es indicativo de rendimientos futuros, el tiempo extra dedicado a monitorizar el mercado sin una ventaja clara es una pérdida de tiempo, que también es una pérdida de dinero.
+
+**La conclusión principal es: no intentes ganarle al mercado, simplemente invierte a intervalos regulares en algunos índices diversificados, y no mires atrás, independientemente de lo que haga el mercado. Dedica el tiempo extra a generar más efectivo para invertir, y la magia del interés compuesto y el promedio de coste en dólares harán el resto.**
+
+[Sígueme en Twitter @carlosbaraza](https://twitter.com/carlosbaraza) si te gusta este tipo de contenido y haré más.
+
+Otras notas:
+
+- La diferencia entre invertir diaria, mensual e incluso anualmente es prácticamente insignificante a largo plazo. A corto plazo, hay una diferencia mayor, siendo la inversión diaria el mejor enfoque si tu bróker ofrece comisiones cero.
+- Esta estrategia depende de que el mercado continúe apreciándose. Si el mercado alguna vez se revirtiera permanentemente, esta estrategia, y prácticamente cualquier estrategia, fallaría.
+
+## Descargo de responsabilidad
+
+No soy un inversor profesional, ni un asesor financiero, y posiblemente ni siquiera un buen inversor aficionado. Este es simplemente un experimento sencillo que ejecuté porque pierdo mucho tiempo y energía monitorizando el mercado.

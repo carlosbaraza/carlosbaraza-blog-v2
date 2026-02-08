@@ -2,19 +2,27 @@ import Image from "next/image";
 import type { Project } from "@/lib/types";
 import { NoiseDistortionImage } from "@/components/shared/NoiseDistortionImage";
 import placeholderImage from "@/../public/images/placeholder.png";
+import type { Locale } from "@/lib/i18n";
+import { localePath } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
 interface ProjectCardProps {
   project: Project;
+  lang?: Locale;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, lang = "en" }: ProjectCardProps) {
+  const tr = project.translations?.[lang];
+  const title = tr?.title ?? project.title;
+  const description = tr?.description ?? project.description;
   const isExternal =
     project.href.startsWith("http://") || project.href.startsWith("https://");
+  const href = isExternal ? project.href : localePath(project.href, lang);
 
   return (
     <article className="group">
       <a
-        href={project.href}
+        href={href}
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
         className="block"
@@ -46,11 +54,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
           <div className="flex flex-col justify-center">
             <h3 className="font-display text-3xl sm:text-4xl font-bold leading-[1.15] tracking-tight text-text group-hover:text-accent transition-colors mb-4">
-              {project.title}
+              {title}
             </h3>
 
             <p className="font-serif text-text-secondary leading-relaxed line-clamp-3">
-              {project.description}
+              {description}
             </p>
 
             {isExternal ? (
@@ -66,7 +74,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
                   />
                 </svg>
-                External link
+                {t(lang, "projects.externalLink")}
               </span>
             ) : null}
           </div>

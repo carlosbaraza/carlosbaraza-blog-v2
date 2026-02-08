@@ -1,15 +1,19 @@
 import Link from "next/link";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/translations";
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   basePath: string;
+  lang?: Locale;
 }
 
 export function Pagination({
   currentPage,
   totalPages,
   basePath,
+  lang = "en",
 }: PaginationProps) {
   const hasPrev = currentPage > 1;
   const hasNext = currentPage < totalPages;
@@ -26,16 +30,16 @@ export function Pagination({
           }
           className="text-accent uppercase tracking-wider hover:text-accent-hover transition-colors"
         >
-          &larr; Previous
+          &larr; {t(lang, "pagination.previous")}
         </Link>
       ) : (
         <span className="text-muted uppercase tracking-wider">
-          &larr; Previous
+          &larr; {t(lang, "pagination.previous")}
         </span>
       )}
 
       <span className="text-muted uppercase tracking-wider">
-        Page {currentPage} of {totalPages}
+        {t(lang, "pagination.page")} {currentPage} {t(lang, "pagination.of")} {totalPages}
       </span>
 
       {hasNext ? (
@@ -43,10 +47,10 @@ export function Pagination({
           href={`${basePath}?page=${currentPage + 1}`}
           className="text-accent uppercase tracking-wider hover:text-accent-hover transition-colors"
         >
-          Next &rarr;
+          {t(lang, "pagination.next")} &rarr;
         </Link>
       ) : (
-        <span className="text-muted uppercase tracking-wider">Next &rarr;</span>
+        <span className="text-muted uppercase tracking-wider">{t(lang, "pagination.next")} &rarr;</span>
       )}
     </nav>
   );

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Serif_4, Inter, Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { headers } from "next/headers";
 import "./globals.css";
 
 const sourceSerif = Source_Serif_4({
@@ -62,14 +61,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const h = await headers();
+  const lang = h.get("x-locale") || "en";
+
   return (
     <html
-      lang="en"
+      lang={lang}
       className={`${sourceSerif.variable} ${inter.variable} ${playfairDisplay.variable}`}
       suppressHydrationWarning
     >
@@ -80,11 +82,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 min-h-[calc(100vh-12rem)]">
-            {children}
-          </main>
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>

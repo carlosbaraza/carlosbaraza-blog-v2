@@ -1,0 +1,36 @@
+---
+title: "Crear un archivo y toda la estructura de carpetas"
+slug: create-a-file-and-all-the-folder-structure
+date_published: "2014-04-01T00:00:00.000Z"
+date_updated: "2014-04-01T00:00:00.000Z"
+tags: []
+draft: false
+summary: "Hoy tuve que lidiar con un pequeño problema en Rails 2.3.18. Se trataba de cómo recibir en una API un archivo XML vía JSON con el contenido del archivo..."
+---
+
+Hoy tuve que lidiar con un pequeño problema en Rails 2.3.18. Se trataba de cómo recibir en una API un archivo XML vía JSON con el contenido del archivo en Base64. Para completar la tarea, tuve que crear el archivo, decodificar el contenido, escribirlo en el archivo y mover el archivo a otra carpeta.
+
+Para crear el archivo en `"{{RAILSROOT}}/tmp/aaa/"`, primero tenemos que crear la estructura de carpetas:
+
+```ruby
+file_dir = Rails.root.join(['tmp', 'aifmd', 'received_files'])
+FileUtils.mkdir_p(file_dir)
+```
+
+`mkdir_p` creará toda la estructura de carpetas si las carpetas aún no existen.
+
+Después, para crear el archivo, le damos un nombre. En mi caso, simplemente la hora actual en formato iso8601. Necesitamos eliminar los dos puntos (:), ya que no están permitidos como carácter en un nombre de archivo.
+
+```ruby
+# The parameter to iso8601 give you the number of decimals. To reduce possible collisions, I gave it 2 decimals.
+file_name = "#{Time.now.iso8601(2).gsub(':','')}.xml"
+# Open a new file with writing rights
+file_path = [file_dir, file_name].join('/')
+tmp_file = File.open(file_path, 'w+')
+# Write on the file the decoded content of the xml.
+decoded_file_content = Base64.decode64(params[:file_content])
+tmp_file.write(decoded_file_content)
+```
+
+- [Documentation of Base64 (Ruby 1.8.7)](http://ruby-doc.org/stdlib-1.8.7/libdoc/base64/rdoc/Base64.html)
+- [Documentation of File (Ruby 1.8.7)](http://ruby-doc.org/core-1.8.7/File.html)

@@ -1,3 +1,5 @@
+import type { Locale } from "./i18n";
+
 export interface BlogPost {
   title: string;
   slug: string;
@@ -7,6 +9,7 @@ export interface BlogPost {
   draft: boolean;
   summary?: string;
   images?: string[];
+  translations?: Partial<Record<Locale, { title: string; summary?: string }>>;
 }
 
 export interface Project {
@@ -15,6 +18,9 @@ export interface Project {
   href: string;
   imgSrc?: string;
   featured?: boolean;
+  translations?: Partial<
+    Record<Locale, { title?: string; description?: string }>
+  >;
 }
 
 export interface Author {

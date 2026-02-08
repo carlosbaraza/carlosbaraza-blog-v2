@@ -1,0 +1,343 @@
+---
+title: "Guía para empezar con WebAssembly, esperemos que sencilla"
+slug: hopefully-simple-webassembly-starting-guide
+date_published: "2019-04-29T00:00:00.000Z"
+date_updated: "2020-07-08T01:18:00.000Z"
+tags: ["software-engineering", "open-source"]
+draft: false
+summary: "Hoy escribiremos nuestro primer módulo de WebAssembly para resolver el famoso Juego de la Vida de Conway."
+images: ["/content/images/2020/07/web-assembly-logo-3.png"]
+---
+
+Hoy escribiremos nuestro primer módulo de WebAssembly para resolver el famoso [Juego de la Vida de Conway](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+
+Este artículo es parte de un taller que realizamos en el [WebAssembly London Meetup](https://www.meetup.com/WebAssembly-London/).
+
+Esta guía está dirigida a desarrolladores web que ya están familiarizados con el ecosistema de JavaScript: NPM, Node, TypeScript, navegadores. Sin embargo, espero hacerla sencilla y divertida para que todos puedan aprender algo de AssemblyScript (compilador de TypeScript a WebAssembly).
+
+![](/content/images/2020/07/web-assembly-logo-3.png)
+
+## ¿Qué es WebAssembly?
+
+En pocas palabras, WebAssembly es un objetivo de compilación para la web. Es un lenguaje de bajo nivel muy sencillo que puede ejecutarse en el navegador. Por ejemplo, podrías compilar código C a WebAssembly y ejecutar un programa en C en el navegador. ¡Genial!, ¿verdad?
+
+## ¿Por qué WebAssembly?
+
+Las aplicaciones web son cada vez más complejas y un mejor objetivo de compilación que JavaScript era necesario desde hace bastante tiempo. Todos queremos entregar aplicaciones web altamente optimizadas como juegos, interfaces complejas, etc.
+
+Es posible escribir software optimizado en memoria y computación usando WebAssembly. Si tu aplicación web tiene una tarea crítica intensiva en CPU, es muy probable que WebAssembly pueda ayudarte a ofrecer una mejor experiencia que JavaScript.
+
+## ¡Empecemos... Ahora!
+
+Para captar la sensación de construir un módulo de WebAssembly, recomiendo empezar con un IDE online sencillo. Durante esta guía, usaremos [WebAssembly.Studio](https://webassembly.studio/).
+
+Abre la página [https://webassembly.studio](https://webassembly.studio) y crea un nuevo proyecto TypeScript.
+
+![](/content/images/downloaded_images/Hopefully-simple-WebAssembly-starting-guide/1-1Ytj6VwA9Hf3DVUjmnLO6w.png)
+
+## Construyendo tu primer módulo
+
+Ahora que tienes un proyecto, simplemente haz clic en "Build and Run" y contempla la belleza de tu máquina virtual WebAssembly en el navegador calculando la Respuesta a la Pregunta Fundamental sobre la Vida, el Universo y Todo lo Demás.
+
+En la esquina inferior derecha, verás la respuesta impresa en la pantalla, para ti... y solo para ti...
+
+![](/content/images/downloaded_images/Hopefully-simple-WebAssembly-starting-guide/1-iwVfQTC5hid6iRctgjX-xg.png)
+
+¡Voilà! Compilaste tu primer módulo de WebAssembly.
+
+## El Juego de la Vida de Conway
+
+Ahora vamos a subir de nivel y construir una pieza de software más compleja. Está basada en un [ejemplo oficial](https://github.com/AssemblyScript/assemblyscript/blob/master/examples/game-of-life/assembly/index.ts).
+
+Te guiaré a lo largo del camino explicando qué es cada cosa, aunque ten en cuenta que todas las herramientas utilizadas en este tutorial son algo experimentales todavía. Por lo tanto, podrías encontrar algunos problemas en el camino.
+
+[*Demo del Juego de la Vida de Conway que estamos construyendo*](https://assemblyscript.github.io/assemblyscript/examples/game-of-life/)
+
+![](/content/images/downloaded_images/Hopefully-simple-WebAssembly-starting-guide/1-gSKv_wajrHIe_ycqCezuFQ.png)
+
+## El HTML
+
+Primero, necesitamos configurar el archivo index.html añadiendo una etiqueta canvas y estilos muy sencillos, para que el canvas ocupe todo el ancho y alto de la página.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body style="background: #fff">
+    <canvas id="canvas"></canvas>
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
+## El código JavaScript de unión
+
+El módulo de WebAssembly no es algo que podamos ejecutar directamente desde el HTML como JavaScript (usando `<script>`). Necesitamos instanciar el módulo usando JavaScript:
+
+- Indicarle al módulo cuánta memoria nos gustaría asignarle.
+- Mapear las entradas/salidas.
+- Orquestar la ejecución del módulo.
+
+Por lo tanto, JavaScript es el maestro y debe tener la lógica para usar el módulo.
+
+```js
+// Set up the canvas with a 2D rendering context
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+const boundingClientRect = canvas.getBoundingClientRect();
+canvas.width = boundingClientRect.width | 0;
+canvas.height = boundingClientRect.height | 0;
+
+// Compute the size of the universe (here: 2px per cell)
+const width = boundingClientRect.width >>> 1;
+const height = boundingClientRect.height >>> 1;
+const size = width * height; // memory required to store either input or output
+const totalMemoryRequired = size + size; // total memory required to store input and output
+
+// Compute the size of and instantiate the module's memory
+const numberPages = ((totalMemoryRequired + 0xffff) & ~0xffff) >>> 16; // aligned up in 64k units
+const wasmMemory = new WebAssembly.Memory({ initial: numberPages });
+
+// Fetch and instantiate the module
+WebAssembly.instantiateStreaming(fetch("../out/main.wasm"), {
+  env: { memory: wasmMemory },
+})
+  .then(initGame)
+  .catch((err) => {
+    throw err;
+  });
+
+// Executed when the WASM module is instantiated
+function initGame(module) {
+  const exports = module.instance.exports;
+
+  // Tell the module about the universe's width and height
+  exports.init(width, height);
+
+  // Fill input at [0, s-1] with random live cells
+  const memory = new Uint8Array(wasmMemory.buffer);
+  for (let y = 0; y < height; ++y)
+    for (let x = 0; x < width; ++x)
+      memory[y * width + x] = Math.random() > 0.1 ? 0 : 1;
+
+  // Update about 30 times a second
+  const desiredFps = 30;
+  const frameDuration = 1000 / 30;
+  function update() {
+    setTimeout(update, frameDuration);
+    exports.step();
+    // copy output at [size, totalMemoryRequired] to input at [0, size]
+    memory.copyWithin(0, size, totalMemoryRequired);
+  }
+
+  // Poorly optimised render function
+  // Easily bigger bottleneck than the actual module
+  function render() {
+    requestAnimationFrame(render);
+
+    context.fillStyle = "rgba(238,238,238,0.67)";
+    context.fillRect(0, 0, width << 1, height << 1);
+    context.fillStyle = "#333";
+
+    for (var y = 0; y < height; ++y)
+      for (var x = 0; x < width; ++x)
+        if (memory[size + y * width + x])
+          context.fillRect(x << 1, y << 1, 2, 2);
+  }
+
+  update();
+  render();
+}
+```
+
+## Compilando TypeScript a WASM
+
+Usaremos el compilador [AssemblyScript](https://github.com/AssemblyScript/assemblyscript) para compilar el proyecto. AssemblyScript viene con la [herramienta CLI ast](https://github.com/AssemblyScript/assemblyscript/wiki/Using-the-compiler).
+
+WebAssembly Studio usa Gulp para construir el proyecto, así que nos ceñiremos a eso ya que es la forma recomendada de implementar el pipeline de construcción.
+
+```js
+const gulp = require('gulp');
+
+gulp.task('build', callback => {
+  const asc = require('assemblyscript/bin/asc');
+  asc.main(
+    [
+      'main.ts',
+      '--baseDir',
+      'assembly',
+      '--binaryFile',
+      '../out/main.wasm',
+      '--sourceMap',
+      '--importMemory',
+      '--optimize',
+      '--measure'
+    ],
+    callback
+  );
+});
+
+gulp.task('default', ['build']);
+```
+
+Ten en cuenta que necesitamos incluir la flag --importMemory ya que queremos tener acceso al objeto WebAssembly.Memory dentro del orquestador JS.
+
+Ahora tenemos todas las piezas para escribir el [Juego de la Vida de Conway](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+
+## El código real
+
+¡Escribamos algo de AssemblyScript! AssemblyScript es un subconjunto de TypeScript, con mapeos directos a tipos de WebAssembly y una buena biblioteca estándar que mapea a APIs de JavaScript. Sin embargo, por muy increíble que sea esta herramienta, ten en cuenta que AssemblyScript tiene algunas [limitaciones](https://github.com/AssemblyScript/assemblyscript/wiki/Limitations).
+
+Para este ejemplo, usaremos los siguientes tipos y funciones integradas:
+
+- `i32`: Entero de 32 bits. Sencillo, ¿verdad?
+- `u8`: Entero sin signo de 8 bits
+- `usize`: Si el objetivo es WebAssembly de 32 bits (que es nuestro caso), entonces es un `u32`.
+- `load<Type>` (puntero: `usize`): Carga un valor del tipo especificado desde la memoria. Equivalente a desreferenciar un puntero en otros lenguajes.
+- `store<Type>` (puntero: `usize`): Almacena un valor del tipo especificado en la memoria. Equivalente a desreferenciar un puntero en otros lenguajes al asignar un valor.
+
+En la Wiki oficial, puedes encontrar [una lista completa de tipos](https://github.com/AssemblyScript/assemblyscript/wiki/Types) y [una lista completa de funciones integradas](https://github.com/AssemblyScript/assemblyscript/wiki/Built-ins).
+
+Ahora el código:
+
+```ts
+// The Game of Life, also known simply as Life, is a
+// cellular automaton devised by the British
+// mathematician John Horton Conway in 1970.
+//
+// https://en.wikipedia.org/wiki/Conway's_Game_of_Life
+
+let width: i32;
+let height: i32;
+let size: i32;
+
+/** Initializes width and height. Called once from JS. */
+export function init(inputWidth: i32, inputHeight: i32): void {
+  width = inputWidth;
+  height = inputHeight;
+  size = width * height;
+}
+
+/** Performs one step. Called about 30 times a second from JS. */
+export function step(): void {
+  // The universe of the Game of Life is an infinite two-dimensional
+  // orthogonal grid of square "cells", each of which is in one
+  // of two possible states, alive or dead.
+
+  for (let row = 0; row < height; ++row) {
+    // Create the torus ilusion. Top and bottom are connected.
+    const rowMinus1 = row == 0 ? height - 1 : row - 1;
+    const rowPlus1 = row == height - 1 ? 0 : row + 1;
+
+    for (let column = 0; column < width; ++column) {
+      // Create the torus ilusion. Left and right are connected.
+      const columnMinus1 = column == 0 ? width - 1 : column - 1;
+      const columnPlus1 = column == width - 1 ? 0 : column + 1;
+
+      // Every cell interacts with its eight neighbours,
+      // which are the cells that are horizontally,
+      // vertically, or diagonally adjacent:
+      const aliveNeighbors =
+        load<u8>(rowMinus1 * width + columnMinus1) +
+        load<u8>(rowMinus1 * width + column) +
+        load<u8>(rowMinus1 * width + columnPlus1) +
+        load<u8>(row * width + columnMinus1) +
+        load<u8>(row * width + columnPlus1) +
+        load<u8>(rowPlus1 * width + columnMinus1) +
+        load<u8>(rowPlus1 * width + column) +
+        load<u8>(rowPlus1 * width + columnPlus1);
+
+      const alive = load<u8>(row * width + column);
+      if (alive) {
+        switch (aliveNeighbors) {
+          // A live cell with fewer than 2 live neighbors dies, as if caused by underpopulation.
+          // A live cell with more than 3 live neighbors dies, as if by overpopulation.
+          default: {
+            store<u8>(size + row * width + column, 0);
+            break;
+          }
+          // A live cell with 2 or 3 live neighbors lives on to the next generation.
+          case 2:
+          case 3:
+        }
+      } else {
+        switch (aliveNeighbors) {
+          // A dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.
+          case 3: {
+            store<u8>(size + row * width + column, 1);
+            break;
+          }
+          default:
+        }
+      }
+    }
+  }
+}
+
+// Performing a step uses bytes [0, size - 1] as the input
+// and writes the output to [size, 2 * size - 1].
+
+// Note that the code above wastes a lot of space by using one byte per cell.
+```
+
+¡Listo!
+
+## Compilar y ejecutar
+
+Con suerte, seguiste los pasos y copiaste y pegaste correctamente. Ahora, si haces clic en el botón "Build and Run", deberías ver lo siguiente:
+
+![](/content/images/downloaded_images/Hopefully-simple-WebAssembly-starting-guide/1-yBemo-UtTjNABkDXwKPjUA.png)
+
+Si no funcionó, haz un fork de [este webassembly.studio](https://webassembly.studio/?f=gjavsyu1r8q), déjame un comentario, [revisa mi repositorio terminado](https://github.com/carlosbaraza/wasm-game-of-life), o... mejor aún... depura el problema tú mismo, ¡que es la mejor forma de aprender!
+
+## Ejecutando localmente
+
+Podríamos descargar el código escrito en WebAssembly Studio, y debería ser bastante fácil ponerlo a funcionar:
+
+```bash
+cd DOWNLOADED_FOLDER
+
+npm install
+npm i -D serve
+npm run build
+
+echo "Conway's Game of Life at http://localhost:5000/src/main" \
+  && npx serve
+```
+
+Eso debería compilar el archivo .wasm y servirlo usando un servidor de archivos estáticos. Si no funciona, podrías clonar [mi repositorio](https://github.com/carlosbaraza/wasm-game-of-life), que debería funcionar (crucemos los dedos).
+
+## Uso en producción
+
+WebAssembly tiene [amplio soporte](https://caniuse.com/#feat=wasm) (85% global en el momento de escribir esto).
+
+AssemblyScript me sorprendió positivamente porque produce un módulo muy pequeño (¡alrededor de ~450 Bytes!) para nuestro Juego de la Vida de Conway.
+
+A modo de comparación, intenté construir algo similar usando Golang 1.11, que tiene soporte nativo para compilar a WebAssembly y el tamaño del módulo producido fue de aproximadamente ~1.5 MB. Definitivamente podría haberse optimizado descartando algunas características de Golang, pero ese tamaño de bundle tal como está hacía el módulo bastante inutilizable.
+
+De todas formas, las herramientas alrededor de WebAssembly están madurando muy rápidamente, así que podemos esperar herramientas muy buenas en los próximos meses/años.
+
+## Nota final
+
+WebAssembly no está diseñado para cubrir todos los casos de uso, y creo que JavaScript es suficiente para la mayoría de las tareas. Sin embargo, puede ser muy útil si una pieza de software necesita estar altamente optimizada o depende de código preexistente escrito en un lenguaje que pueda compilarse a WebAssembly (cualquier lenguaje con un frontend LLVM).
+
+Independientemente, WebAssembly y AssemblyScript son herramientas totalmente válidas en el cinturón de herramientas del desarrollador y deberían considerarse cuando llegue el momento.
+
+## Recursos
+
+- Haz fork del código funcional: [https://webassembly.studio/?f=gjavsyu1r8q](https://webassembly.studio/?f=gjavsyu1r8q)
+- [Repositorio del proyecto terminado](https://github.com/carlosbaraza/wasm-game-of-life)

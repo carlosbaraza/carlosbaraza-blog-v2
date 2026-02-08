@@ -1,0 +1,36 @@
+---
+title: "El objeto request en Rails 2.3.18"
+slug: request-object-in-rails-2-3-18
+date_published: "2014-03-20T00:00:00.000Z"
+date_updated: "2014-03-20T00:00:00.000Z"
+tags: []
+draft: false
+summary: "Durante la ejecución de una acción en Rails podemos acceder a todos los parámetros de la petición a través del objeto request. Este objeto incluye..."
+---
+
+Durante la ejecución de una acción en Rails podemos acceder a todos los parámetros de la petición a través del objeto request. Este objeto incluye los siguientes métodos útiles:
+
+- **headers** -- Devuelve un hash que contiene las cabeceras asociadas a la petición.
+- **body** -- Devuelve un StringIO con el cuerpo.
+- **host** -- El nombre de host utilizado para esta petición.
+- **domain** -- El nombre de host sin la primera parte (normalmente "www").
+- **format** -- El tipo de contenido solicitado por el cliente.
+- **method** -- El método HTTP utilizado para la petición.
+- **get?, post?, put?, delete?, head?** -- Devuelve true si el método HTTP es get/post/put/delete/head.
+- **port** -- El número de puerto (entero) utilizado para la petición.
+- **protocol** -- El protocolo utilizado para la petición.
+- **query_string** -- La parte de la cadena de consulta de la URL -- todo lo que está después de "?".
+- **remote_ip** -- La dirección IP del cliente.
+- **url** -- La URL completa utilizada para la petición.
+
+Encontré bastante útil el método headers para obtener cabeceras de esta forma:
+
+```
+request.headers['CONTENT_TYPE']
+```
+
+También puedes obtener el cuerpo sin procesar de la siguiente manera:
+
+```
+request.body.read
+```
