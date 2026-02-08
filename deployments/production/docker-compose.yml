@@ -1,0 +1,30 @@
+services:
+  blog:
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    container_name: carlosbaraza-blog
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    networks:
+      - tunnel
+    # No ports exposed to host — only accessible via cloudflared tunnel
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: carlosbaraza-cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - tunnel
+    depends_on:
+      - blog
+
+networks:
+  tunnel:
+    driver: bridge
