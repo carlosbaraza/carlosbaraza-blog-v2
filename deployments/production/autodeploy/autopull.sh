@@ -19,7 +19,7 @@ while true; do
   LOCAL=$(git rev-parse HEAD)
   REMOTE=$(git rev-parse origin/main)
 
-  if [ "$LOCAL" != "$REMOTE" ]; then
+  if [ "$LOCAL" != "$REMOTE" ] && git merge-base --is-ancestor "$LOCAL" "$REMOTE"; then
     echo "[autopull] New commits: ${LOCAL:0:7} -> ${REMOTE:0:7}"
     git pull origin main --ff-only
 
