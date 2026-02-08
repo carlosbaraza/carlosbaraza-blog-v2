@@ -16,37 +16,37 @@ export function Pagination({
 
   return (
     <nav
-      className="flex items-center justify-between pt-8 font-sans text-sm"
+      className="flex items-center justify-between pt-24 font-sans text-sm"
       aria-label="Pagination"
     >
       {hasPrev ? (
         <Link
           href={
-            currentPage === 2
-              ? basePath
-              : `${basePath}?page=${currentPage - 1}`
+            currentPage === 2 ? basePath : `${basePath}?page=${currentPage - 1}`
           }
-          className="text-accent hover:text-accent-hover transition-colors"
+          className="text-accent uppercase tracking-wider hover:text-accent-hover transition-colors"
         >
           &larr; Previous
         </Link>
       ) : (
-        <span className="text-muted">&larr; Previous</span>
+        <span className="text-muted uppercase tracking-wider">
+          &larr; Previous
+        </span>
       )}
 
-      <span className="text-muted">
+      <span className="text-muted uppercase tracking-wider">
         Page {currentPage} of {totalPages}
       </span>
 
       {hasNext ? (
         <Link
           href={`${basePath}?page=${currentPage + 1}`}
-          className="text-accent hover:text-accent-hover transition-colors"
+          className="text-accent uppercase tracking-wider hover:text-accent-hover transition-colors"
         >
           Next &rarr;
         </Link>
       ) : (
-        <span className="text-muted">Next &rarr;</span>
+        <span className="text-muted uppercase tracking-wider">Next &rarr;</span>
       )}
     </nav>
   );

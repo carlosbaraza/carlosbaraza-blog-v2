@@ -23,7 +23,7 @@ export function Header() {
             href="/"
             className="text-text hover:text-accent transition-colors"
           >
-            <IconLogo className="h-10 sm:h-14" />
+            <IconLogo className="h-10 sm:h-14 relative -left-2" />
           </Link>
         </div>
 

@@ -34,7 +34,7 @@ export default function AboutPage() {
             alt={author.name}
             width={160}
             height={160}
-            className="w-full h-full object-cover grayscale sepia-20"
+            className="w-full h-full object-cover filter-[grayscale(1)_sepia(.3)_saturate(2)_hue-rotate(-40deg)]"
             priority
           />
         </div>
@@ -98,9 +98,9 @@ export default function AboutPage() {
           working on.
         </p>
         <p>
-          When I&apos;m not building or writing, I&apos;m probably
-          woodworking, playing music, or being used as a climbing frame by my
-          two little ones.
+          When I&apos;m not building or writing, I&apos;m probably woodworking,
+          playing music, or being used as a climbing frame by my two little
+          ones.
         </p>
       </Prose>
 

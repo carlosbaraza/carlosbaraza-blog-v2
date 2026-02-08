@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { BlogPost } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { TagBadge } from "./TagBadge";
+import { NoiseDistortionImage } from "@/components/shared/NoiseDistortionImage";
 import placeholderImage from "@/../public/images/placeholder.png";
 
 interface PostCardProps {
@@ -17,7 +18,7 @@ function CardImage({ src, alt }: { src?: string; alt: string }) {
         src={src}
         alt={alt}
         fill
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        className="object-cover"
         sizes="(max-width: 1024px) 100vw, 50vw"
       />
     );
@@ -29,7 +30,7 @@ function CardImage({ src, alt }: { src?: string; alt: string }) {
       alt=""
       placeholder="blur"
       fill
-      className="object-cover transition-transform duration-500 group-hover:scale-105"
+      className="object-cover"
       sizes="(max-width: 1024px) 100vw, 50vw"
     />
   );
@@ -43,9 +44,9 @@ export function PostCard({ post, featured = false }: PostCardProps) {
       <article className="group">
         <Link href={`/blog/${post.slug}`} className="block">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-surface">
+            <NoiseDistortionImage groupHover className="relative aspect-[16/9] overflow-hidden rounded-[50px] bg-surface">
               <CardImage src={imageUrl} alt={post.title} />
-            </div>
+            </NoiseDistortionImage>
 
             <div className="flex flex-col justify-center">
               <time
@@ -82,9 +83,9 @@ export function PostCard({ post, featured = false }: PostCardProps) {
   return (
     <article className="group">
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-surface mb-4">
+        <NoiseDistortionImage groupHover className="relative aspect-[4/3] overflow-hidden rounded-sm bg-surface mb-4">
           <CardImage src={imageUrl} alt={post.title} />
-        </div>
+        </NoiseDistortionImage>
 
         <time
           dateTime={post.datePublished}

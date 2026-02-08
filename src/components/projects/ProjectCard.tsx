@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Project } from "@/lib/types";
+import { NoiseDistortionImage } from "@/components/shared/NoiseDistortionImage";
 import placeholderImage from "@/../public/images/placeholder.png";
 
 interface ProjectCardProps {
@@ -19,13 +20,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         className="block"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-surface">
+          <NoiseDistortionImage
+            groupHover
+            className="relative aspect-[16/9] overflow-hidden rounded-[50px] bg-surface"
+          >
             {project.imgSrc ? (
               <Image
                 src={project.imgSrc}
                 alt={project.title}
                 fill
-                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                className="object-cover object-top"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             ) : (
@@ -34,11 +38,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 alt=""
                 placeholder="blur"
                 fill
-                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                className="object-cover object-top"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             )}
-          </div>
+          </NoiseDistortionImage>
 
           <div className="flex flex-col justify-center">
             <h3 className="font-display text-3xl sm:text-4xl font-bold leading-[1.15] tracking-tight text-text group-hover:text-accent transition-colors mb-4">

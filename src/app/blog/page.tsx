@@ -21,8 +21,8 @@ export default async function BlogPage(props: {
 
   return (
     <>
-      <h1 className="font-display text-4xl sm:text-5xl font-bold text-center mb-12">
-        All Posts
+      <h1 className="font-sans uppercase font-thin tracking-[10px] text-xl text-center mb-12">
+        Every Post
       </h1>
 
       <div className="flex flex-col gap-16">
