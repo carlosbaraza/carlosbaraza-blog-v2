@@ -44,4 +44,4 @@ docker run -p 3000:3000 carlosbaraza-blog
 
 ## License
 
-Content and code are copyright Carlos Baraza.
+[MIT](LICENSE)
