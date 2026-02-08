@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "A few years ago (2010), just when the Quadcopter or drones were starting to rise, I decided to create an Open Source Quadcopter, as part of\u2026",
+  images: ["/content/images/downloaded_images/Quadruino-is-back/0-e7NnJe_eLjq8sRG4.jpg"],
 };

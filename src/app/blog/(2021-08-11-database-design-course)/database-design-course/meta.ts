@@ -7,4 +7,5 @@ export const post: BlogPost = {
   dateUpdated: "2021-08-11T21:52:14.000Z",
   tags: ["software-engineering", "notes"],
   draft: false,
+  images: ["/content/images/2021/08/eer-cardinality.png"],
 };

@@ -1,0 +1,20 @@
+---
+title: "Redirector"
+slug: redirector
+date_published: "2019-04-30T20:22:00.000Z"
+date_updated: "2020-07-08T01:11:31.000Z"
+tags: ["open-source"]
+draft: false
+summary: "Simple open-source service for HTTP redirects."
+---
+
+Redirect traffic depending on origin. Very simple. The code is open source at [carlosbaraza/redirector](https://github.com/carlosbaraza/redirector)
+
+## Adding a new URL
+
+1. Add new redirect to map
+2. Add domain to dokku
+
+## License
+
+MIT

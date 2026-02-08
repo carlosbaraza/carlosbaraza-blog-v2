@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Applying stories to brands. The hero or customer desires something, but it is hard to get. That's the problem. When she is on the verge of giving up, a guide appears. This guide provides a plan and calls the hero to take action. The hero then avoids failure and gets something she initially desired.",
+  images: ["/content/images/2021/05/story-brand-cover-image.jpg"],
 };

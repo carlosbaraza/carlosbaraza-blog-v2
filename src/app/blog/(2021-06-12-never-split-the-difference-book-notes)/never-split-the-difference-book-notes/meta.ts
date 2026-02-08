@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Negotiating tactics. Bending your counterpart reality. Negotiating offers and numbers.",
+  images: ["/content/images/2021/06/IMG_2175.jpeg"],
 };

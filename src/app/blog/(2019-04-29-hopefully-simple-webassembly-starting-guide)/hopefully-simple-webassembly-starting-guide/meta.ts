@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Today we'd be writing our first WebAssembly module to solve the widely known Conway's Game of Life.",
+  images: ["/content/images/2020/07/web-assembly-logo-3.png"],
 };

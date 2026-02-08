@@ -7,4 +7,5 @@ export const post: BlogPost = {
   dateUpdated: "2020-10-22T10:22:04.000Z",
   tags: ["finance"],
   draft: false,
+  images: ["/content/images/2020/10/index-strategies.jpg"],
 };

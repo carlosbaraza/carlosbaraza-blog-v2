@@ -7,4 +7,5 @@ export const post: BlogPost = {
   dateUpdated: "2020-12-28T13:50:00.000Z",
   tags: ["side-hustle"],
   draft: false,
+  images: ["/content/images/2020/12/710Y1Qb-p5L.jpg"],
 };

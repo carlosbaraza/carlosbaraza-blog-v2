@@ -8,4 +8,5 @@ export const post: BlogPost = {
   tags: ["Side Hustle", "Startup", "Job"],
   draft: false,
   summary: "Validate soon. Sell more.",
+  images: ["/content/images/2020/07/Wisertag-Plants-Ttag--5MP--6.jpg"],
 };

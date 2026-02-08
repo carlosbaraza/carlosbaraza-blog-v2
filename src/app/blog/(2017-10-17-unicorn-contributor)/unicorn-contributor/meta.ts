@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Simple CLI tool to complete your GitHub contribution bar. NodeJS.",
+  images: ["/content/images/2020/07/unicorn-contributor.png"],
 };

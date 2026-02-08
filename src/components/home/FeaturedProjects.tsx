@@ -7,16 +7,19 @@ export function FeaturedProjects() {
 
   return (
     <section className="py-8">
-      <div className="flex items-baseline justify-between mb-6">
-        <h2 className="font-serif text-2xl font-bold">Featured Projects</h2>
+      <div className="flex items-baseline justify-between mb-12">
+        <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">
+          Featured Projects
+        </h2>
         <Link
           href="/projects"
-          className="font-sans text-sm text-accent hover:text-accent-hover transition-colors"
+          className="font-sans text-xs uppercase tracking-wider text-accent hover:text-accent-hover transition-colors"
         >
           All projects &rarr;
         </Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+      <div className="flex flex-col gap-16">
         {featured.map((project) => (
           <ProjectCard key={project.title} project={project} />
         ))}

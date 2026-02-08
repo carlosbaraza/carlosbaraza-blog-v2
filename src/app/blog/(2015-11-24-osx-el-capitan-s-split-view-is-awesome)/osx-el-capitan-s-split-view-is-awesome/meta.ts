@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Personally, I think that Apple should work on a unified operating system and discontinue the development of iOS (The new iPad PRO is an\u2026",
+  images: ["/content/images/downloaded_images/OSX-El-Capitan-s-Split-View-is-awesome/0-xNfCXU4zmr8-J1b8.png"],
 };

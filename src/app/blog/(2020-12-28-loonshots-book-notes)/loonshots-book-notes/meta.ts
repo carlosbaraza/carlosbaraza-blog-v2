@@ -7,4 +7,5 @@ export const post: BlogPost = {
   dateUpdated: "2021-05-28T11:56:33.000Z",
   tags: ["book", "notes"],
   draft: false,
+  images: ["/content/images/2021/05/loonshots-cover.jpg"],
 };

@@ -41,12 +41,22 @@ function EmailIcon() {
   );
 }
 
+function RssIcon() {
+  return (
+    <svg viewBox="2 2 20 20" className={iconClass}>
+      <circle cx="6.18" cy="17.82" r="2.18" />
+      <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z" />
+    </svg>
+  );
+}
+
 interface SocialIconsProps {
   github?: string;
   twitter?: string;
   youtube?: string;
   linkedin?: string;
   email?: string;
+  rss?: string;
   className?: string;
 }
 
@@ -56,6 +66,7 @@ export function SocialIcons({
   youtube,
   linkedin,
   email,
+  rss,
   className = "",
 }: SocialIconsProps) {
   const links = [
@@ -68,6 +79,7 @@ export function SocialIcons({
       Icon: EmailIcon,
       label: "Email",
     },
+    { href: rss, Icon: RssIcon, label: "RSS Feed" },
   ].filter((link) => link.href);
 
   return (

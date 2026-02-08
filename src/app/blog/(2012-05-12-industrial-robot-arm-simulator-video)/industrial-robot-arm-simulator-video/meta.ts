@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Matlab, Control theory, Robotics, Linear Algebra, UI, Industrial Robotics.",
+  images: ["/content/images/2020/07/industrial-robot-arm-simulator-preview.jpg"],
 };

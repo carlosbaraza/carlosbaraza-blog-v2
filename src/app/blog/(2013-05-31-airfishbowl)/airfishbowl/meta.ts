@@ -8,4 +8,5 @@ export const post: BlogPost = {
   tags: ["video", "open-source", "project"],
   draft: false,
   summary: "Web driven air fish robot. uControllers, Python, JavaScript.",
+  images: ["/content/images/2020/07/air-fish-bowl-preview.png"],
 };

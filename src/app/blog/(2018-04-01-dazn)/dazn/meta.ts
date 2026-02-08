@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Full Stack Engineer (Contract). React, Node, AWS, Docker, Serverless.",
+  images: ["/content/images/2021/05/dazn-sports.jpeg"],
 };

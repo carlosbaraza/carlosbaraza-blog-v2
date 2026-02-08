@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Senior Software Engineer. Web performance, React, Node, JavaScript, AWS, Docker",
+  images: ["/content/images/2021/05/expedia.jpeg"],
 };

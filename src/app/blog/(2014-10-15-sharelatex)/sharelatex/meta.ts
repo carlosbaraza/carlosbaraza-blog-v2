@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "When I was a student, I wrote pretty much all my works in LaTeX. I loved it because of the formula editor, which is really good.",
+  images: ["/content/images/downloaded_images/ShareLaTeX/0-jtW8ZExh-l4fBlc5.png"],
 };

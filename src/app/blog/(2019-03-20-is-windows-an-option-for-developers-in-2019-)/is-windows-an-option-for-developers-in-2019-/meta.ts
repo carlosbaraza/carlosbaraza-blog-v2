@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "As you may all know, developers are a social tribe that is well known for using Macbooks with stickers on them. There are multiple reasons\u2026",
+  images: ["/content/images/downloaded_images/Is-Windows-an-option-for-developers-in-2019-/1-c5ch8FSmmEqjjzSISSLhNw.jpeg"],
 };

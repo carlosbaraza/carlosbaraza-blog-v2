@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Quadruino is an open source drone dreamed by some friends living together during our university years. It served as an experimentation ground for multiple control theory/automation/electronic tests.",
+  images: ["/content/images/2020/07/quadruino-video-preview.jpg"],
 };

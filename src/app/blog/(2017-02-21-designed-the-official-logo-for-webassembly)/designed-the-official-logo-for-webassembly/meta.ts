@@ -8,4 +8,5 @@ export const post: BlogPost = {
   tags: ["Open source"],
   draft: false,
   summary: "I won the official logo contest for WebAssembly.",
+  images: ["/content/images/2020/07/web-assembly-logo.png"],
 };

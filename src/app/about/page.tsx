@@ -1,6 +1,9 @@
+import Image from "next/image";
 import { author, authorBio } from "@/content/author";
 import { SocialIcons } from "@/components/shared/SocialIcons";
 import { Prose } from "@/components/shared/Prose";
+import { Logo } from "@/components/shared/Logo";
+import heroImage from "@/../public/images/placeholder.png";
 
 export const metadata = {
   title: "About",
@@ -9,182 +12,365 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <>
-      <div className="flex flex-col sm:flex-row items-start gap-8 mb-10">
-        <img
-          src={author.avatar}
-          alt={author.name}
-          className="h-32 w-32 rounded-full object-cover"
-        />
-        <div>
-          <h1 className="font-serif text-3xl font-bold">{author.name}</h1>
-          <p className="font-sans text-sm text-muted mt-1">
-            {author.occupation} at{" "}
-            <a
-              href={author.companyUrl}
-              className="text-accent hover:text-accent-hover transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {author.company}
-            </a>
-          </p>
-          <SocialIcons
-            github={author.github}
-            twitter={author.twitter}
-            youtube={author.youtube}
-            linkedin={author.linkedin}
-            email={author.email}
-            className="mt-3"
+    <article>
+      <div className="max-w-5xl mx-auto">
+        <div className="aspect-[21/9] overflow-hidden rounded-[50px] md:rounded-[100px]">
+          <Image
+            src={heroImage}
+            alt={author.name}
+            placeholder="blur"
+            className="w-full h-full object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1024px"
+            priority
           />
         </div>
       </div>
 
+      {/* Avatar overlapping hero */}
+      <div className="flex justify-center -mt-16 sm:-mt-20 mb-8 relative z-10">
+        <div className="h-32 w-32 sm:h-40 sm:w-40 rounded-full overflow-hidden border-4 border-bg shadow-xl">
+          <Image
+            src={author.avatar}
+            alt={author.name}
+            width={160}
+            height={160}
+            className="w-full h-full object-cover grayscale sepia-20"
+            priority
+          />
+        </div>
+      </div>
+
+      <header className="max-w-4xl mx-auto mb-12 text-center">
+        <p className="font-sans text-xs uppercase tracking-wider text-muted">
+          {author.occupation} at{" "}
+          <a
+            href={author.companyUrl}
+            className="text-accent hover:text-accent-hover transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {author.company}
+          </a>
+        </p>
+
+        <h1 className="mt-4 mb-6">
+          <Logo className="h-10 sm:h-14 mx-auto" />
+          <span className="sr-only">Carlos Baraza</span>
+        </h1>
+
+        <SocialIcons
+          github={author.github}
+          twitter={author.twitter}
+          youtube={author.youtube}
+          linkedin={author.linkedin}
+          email={author.email}
+          rss="/feed.xml"
+          className="justify-center"
+        />
+      </header>
+
       <Prose>
-        {authorBio.split("\n\n").map((paragraph, i) => (
-          <p key={i}>{paragraph}</p>
+        <p>
+          I&apos;ve been writing code since I was a kid. These days, I write it
+          alongside AI agents &mdash; and honestly, I think that&apos;s the most
+          exciting shift in software since the internet itself.
+        </p>
+        <p>
+          I&apos;m the CTO at{" "}
+          <a
+            href="https://inpractise.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            InPractise
+          </a>
+          , where I&apos;ve spent years building products with React, Next.js,
+          and Node. Before that, I shipped software at Bloomberg, Expedia, and
+          DAZN. But what I&apos;m most focused on now is how AI agents are
+          changing the way we build &mdash; and how teams can actually adopt
+          them without the hype.
+        </p>
+        <p>
+          I write about agentic coding workflows, share what works (and what
+          doesn&apos;t), and help companies think through their AI and agent
+          strategy. If you&apos;re figuring out how to bring agents into your
+          engineering org, that&apos;s exactly the kind of problem I love
+          working on.
+        </p>
+        <p>
+          When I&apos;m not building or writing, I&apos;m probably
+          woodworking, playing music, or being used as a climbing frame by my
+          two little ones.
+        </p>
+      </Prose>
+
+      {/* Resume */}
+      <div className="max-w-[720px] mx-auto mt-20">
+        <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-text mb-4">
+          Resume
+        </h2>
+        <p className="font-serif text-text-secondary mb-2">
+          Senior Full Stack Engineer &middot; London, UK
+        </p>
+
+        <div className="flex flex-wrap gap-x-6 gap-y-1 font-sans text-sm text-muted mb-12">
+          <a
+            href="mailto:work@carlosbaraza.com"
+            className="hover:text-text transition-colors"
+          >
+            work@carlosbaraza.com
+          </a>
+          <a
+            href="https://carlosbaraza.com"
+            className="hover:text-text transition-colors"
+          >
+            carlosbaraza.com
+          </a>
+          <a
+            href="https://linkedin.com/in/carlos-baraza"
+            className="hover:text-text transition-colors"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/carlosbaraza"
+            className="hover:text-text transition-colors"
+          >
+            GitHub
+          </a>
+        </div>
+
+        {/* Skills */}
+        {[
+          {
+            label: "Leadership",
+            skills: ["Technical Strategy & Architecture", "Product Vision"],
+          },
+          {
+            label: "Web Development",
+            skills: [
+              "React",
+              "Next.js",
+              "Node.js",
+              "Full-Stack",
+              "UX/UI Design",
+              "PostgreSQL",
+            ],
+          },
+          {
+            label: "AI & Agents",
+            skills: [
+              "LLM-Powered Agents",
+              "Agentic Coding Workflows",
+              "PyTorch",
+              "Deep Learning",
+            ],
+          },
+          {
+            label: "General",
+            skills: [
+              "Polyglot \u2014 whatever my agents can parse",
+              "Cloud & Infrastructure",
+            ],
+          },
+        ].map((group) => (
+          <div key={group.label} className="mb-8">
+            <h3 className="font-sans text-xs font-medium uppercase tracking-wider text-muted mb-3">
+              {group.label}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="inline-block font-sans text-xs px-3 py-1 rounded-full border border-border text-text-secondary"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
         ))}
 
-        <h2>Resume</h2>
+        <div className="border-t border-border" />
 
-        <h3>Senior Full Stack Engineer</h3>
-        <p>London, UK</p>
-        <ul>
-          <li>
-            Email:{" "}
-            <a href="mailto:work@carlosbaraza.com">work@carlosbaraza.com</a>
-          </li>
-          <li>
-            Website:{" "}
-            <a href="https://carlosbaraza.com">carlosbaraza.com</a>
-          </li>
-          <li>
-            LinkedIn:{" "}
-            <a href="https://linkedin.com/in/carlos-baraza">
-              linkedin.com/in/carlos-baraza
-            </a>
-          </li>
-          <li>
-            Github:{" "}
-            <a href="https://github.com/carlosbaraza">
-              github.com/carlosbaraza
-            </a>
-          </li>
-        </ul>
+        {/* Experience */}
+        <h3 className="font-sans text-xs font-medium uppercase tracking-wider text-muted mt-16 mb-10">
+          Experience
+        </h3>
 
-        <h3>Skills</h3>
-        <ul>
-          <li>TypeScript and JavaScript</li>
-          <li>React, NextJS, Node, Vue, Svelte</li>
-          <li>UX/UI design, Adobe Suite, Figma</li>
-          <li>TDD, BDD, Jest and Mocha</li>
-          <li>
-            Dev Ops: Docker, GNU/Linux, AWS, GCP, Kubernetes, Serverless,
-            Firebase, Heroku, DigitalOcean
-          </li>
-          <li>
-            Databases: SQL (PostgreSQL, SQL Server). NoSQL (Mongo, DynamoDB).
-            GraphQL
-          </li>
-          <li>Rust, Python, Golang, Ruby and WebAssembly</li>
-          <li>Machine Learning: PyTorch, Keras, scikit, TensorFlow</li>
-          <li>Agile principles and good professional soft skills</li>
-        </ul>
+        <div className="flex flex-col gap-12">
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h4 className="font-display text-xl font-bold text-text">
+                inpractise.com
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2019 &ndash; Present
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-text-secondary mb-2">
+              CTO and Lead Engineer
+            </p>
+            <p className="font-serif text-text-secondary leading-relaxed">
+              Architected the tech stack and developed the product. React, Node,
+              Next, Docker, PostgreSQL, GraphQL.
+            </p>
+          </div>
 
-        <hr />
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h4 className="font-display text-xl font-bold text-text">
+                Bloomberg
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2020 &ndash; 2021
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-text-secondary mb-2">
+              Senior Software Engineer &middot; London
+            </p>
+            <p className="font-serif text-text-secondary leading-relaxed">
+              Built web monitoring and management tool for an important
+              financial process. TypeScript, React, Node, Kubernetes, SQL
+              Server.
+            </p>
+          </div>
 
-        <h2>Experience</h2>
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h4 className="font-display text-xl font-bold text-text">
+                DAZN (Perform)
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2018 &ndash; 2019
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-text-secondary mb-2">
+              Senior Software Engineer / DevOps / SRE &middot; London
+            </p>
+            <p className="font-serif text-text-secondary leading-relaxed">
+              Built multiple applications (React, Node, Next, GraphQL, Apollo)
+              hosted on AWS. Golang, TypeScript, Serverless (Lambda).
+            </p>
+          </div>
 
-        <h3>inpractise.com</h3>
-        <p>
-          <strong>CTO and Lead Engineer</strong>. 10/2019 to present.
-        </p>
-        <ul>
-          <li>
-            Architected the tech stack and developed the product. React, Node,
-            Next, Docker, PostgreSQL, GraphQL.
-          </li>
-        </ul>
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h4 className="font-display text-xl font-bold text-text">
+                HomeAway / VRBO (Expedia)
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2016 &ndash; 2018
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-text-secondary mb-2">
+              Senior Software Engineer &middot; London
+            </p>
+            <p className="font-serif text-text-secondary leading-relaxed">
+              Highly optimised and resilient server side rendered React/Node
+              application. Redux, Docker, AWS, SEO/SEM, A/B Testing.
+            </p>
+          </div>
 
-        <h3>Bloomberg</h3>
-        <p>
-          <strong>Senior Software Engineer</strong>. London, 01/2020 to 01/2021
-        </p>
-        <ul>
-          <li>TypeScript, React, Node, Kubernetes, SQL Server.</li>
-          <li>
-            Built web monitoring and management tool for an important financial
-            process
-          </li>
-        </ul>
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h4 className="font-display text-xl font-bold text-text">
+                Hire Space
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2016
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-text-secondary">
+              Senior Software Engineer &middot; London
+            </p>
+          </div>
 
-        <h3>DAZN (Perform)</h3>
-        <p>
-          <strong>Senior Software Engineer / DevOps / SRE</strong>. London,
-          04/2018 to 10/2019
-        </p>
-        <ul>
-          <li>
-            React, Node, Golang, TypeScript, AWS (many services), Serverless
-            (Lambda)
-          </li>
-          <li>
-            Built multiple applications (React, Node, Next, GraphQL, Apollo).
-            Hosted on AWS.
-          </li>
-        </ul>
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+              <h4 className="font-display text-xl font-bold text-text">
+                Kneip S.A.
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2014 &ndash; 2016
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-text-secondary">
+              Software Engineer &middot; Luxembourg
+            </p>
+          </div>
+        </div>
 
-        <h3>HomeAway / VRBO (Expedia)</h3>
-        <p>
-          <strong>Senior Software Engineer</strong>. London, 11/2016 to 03/2018
-        </p>
-        <ul>
-          <li>
-            React, Webpack, Redux, Node, Docker, AWS, SEO/SEM, SSR, A/B Testing
-          </li>
-          <li>
-            Highly optimised and resilient server side rendered React/Node
-            application
-          </li>
-        </ul>
+        <div className="border-t border-border mt-16" />
 
-        <h3>Hire Space</h3>
-        <p>
-          <strong>Senior Software Engineer</strong>. London, 03/2016 to 10/2016
-        </p>
+        {/* Education */}
+        <h3 className="font-sans text-xs font-medium uppercase tracking-wider text-muted mt-16 mb-10">
+          Education
+        </h3>
 
-        <h3>Kneip S.A.</h3>
-        <p>
-          <strong>Software Engineer</strong>. Luxembourg, 03/2014 to 03/2016
-        </p>
+        <div className="flex flex-col gap-8">
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <h4 className="font-display text-xl font-bold text-text">
+                B.Eng. Industrial Electronics and Automation
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2009 &ndash; 2013
+              </span>
+            </div>
+            <p className="font-serif text-text-secondary">
+              University of Castilla-La Mancha, Spain
+            </p>
+          </div>
 
-        <hr />
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <h4 className="font-display text-xl font-bold text-text">
+                Web Development
+              </h4>
+              <span className="font-sans text-xs text-muted tracking-wide">
+                2012 &ndash; 2013
+              </span>
+            </div>
+            <p className="font-serif text-text-secondary">
+              Waterford Institute of Technology (WIT), Ireland
+            </p>
+          </div>
+        </div>
 
-        <h2>Education</h2>
+        <div className="border-t border-border mt-16" />
 
-        <h3>B.Eng. Industrial Electronics and Automation Engineering</h3>
-        <p>University of Castilla-La Mancha, Spain, 2009 to 2013</p>
+        {/* Languages */}
+        <h3 className="font-sans text-xs font-medium uppercase tracking-wider text-muted mt-16 mb-10">
+          Languages
+        </h3>
 
-        <h3>Web development</h3>
-        <p>Waterford Institute of Technology (WIT), Ireland, 2012 to 2013</p>
-
-        <hr />
-
-        <h2>Languages</h2>
-        <ul>
-          <li>
-            <strong>English</strong>: Very fluent. Lived in London for 7+ years.
-            C1. First Certificate of Cambridge
-          </li>
-          <li>
-            <strong>French</strong>: Fluent. Lived in France for 4 years. B2.
-            DELF.
-          </li>
-          <li>
-            <strong>Spanish</strong>: Native
-          </li>
-        </ul>
-      </Prose>
-    </>
+        <div className="flex flex-col gap-4 mb-16">
+          <div className="flex items-baseline gap-3">
+            <span className="font-display text-lg font-bold text-text w-24 shrink-0">
+              English
+            </span>
+            <span className="font-serif text-text-secondary">
+              Very fluent. Lived in London for 7+ years. C1. First Certificate
+              of Cambridge.
+            </span>
+          </div>
+          <div className="flex items-baseline gap-3">
+            <span className="font-display text-lg font-bold text-text w-24 shrink-0">
+              French
+            </span>
+            <span className="font-serif text-text-secondary">
+              Fluent. Lived in France for 4 years. B2. DELF.
+            </span>
+          </div>
+          <div className="flex items-baseline gap-3">
+            <span className="font-display text-lg font-bold text-text w-24 shrink-0">
+              Spanish
+            </span>
+            <span className="font-serif text-text-secondary">Native.</span>
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }

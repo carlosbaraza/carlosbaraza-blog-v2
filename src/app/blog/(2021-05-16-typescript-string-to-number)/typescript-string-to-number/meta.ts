@@ -7,4 +7,5 @@ export const post: BlogPost = {
   dateUpdated: "2021-05-16T23:41:38.000Z",
   tags: ["software-engineering"],
   draft: false,
+  images: ["/content/images/2021/05/number-parsing-comparison.png"],
 };

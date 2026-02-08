@@ -8,4 +8,5 @@ export const post: BlogPost = {
   tags: ["Job"],
   draft: false,
   summary: "Software Engineer. JavaScript, Ruby on Rails, PostgreSQL, Python.",
+  images: ["/content/images/2020/07/kneip-logo.png"],
 };

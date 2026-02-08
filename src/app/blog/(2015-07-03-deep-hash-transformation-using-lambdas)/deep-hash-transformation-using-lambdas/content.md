@@ -1,0 +1,11 @@
+---
+title: "Deep Hash transformation using Lambdas"
+slug: deep-hash-transformation-using-lambdas
+date_published: "2015-07-03T00:00:00.000Z"
+date_updated: "2015-07-03T00:00:00.000Z"
+tags: []
+draft: false
+summary: "Today I had the need in my job of implementing a similar behaviour of what Rails hash method .deep_symbolize_keys does. Here is a possible..."
+---
+
+Today I had the need in my job of implementing a similar behaviour of what Rails hash method .deep_symbolize_keys does. Here is a possible implementation of a deep recursive hash transformation, using recursive lambdas.

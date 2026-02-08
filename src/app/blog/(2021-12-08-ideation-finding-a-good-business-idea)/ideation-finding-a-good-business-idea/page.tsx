@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PostLayout } from "@/components/blog/PostLayout";
 import { post } from "./meta";
+import heroImage from "./hero.png";
 
 export const metadata: Metadata = {
   title: post.title,
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
 
 export default function IdeationFindingAGoodBusinessIdea() {
   return (
-    <PostLayout post={post}>
-      <p>
-        <img
-          src="/content/images/2021/12/Ideation-finding-a-good-business-idea-1.png"
-          alt=""
-        />
-      </p>
-
+    <PostLayout post={post} heroImage={heroImage}>
       <p>
         What makes for a good business idea? How can we find good ideas in the
         modern world, where everything seems to be solved already?
@@ -552,7 +546,7 @@ export default function IdeationFindingAGoodBusinessIdea() {
           src="/content/images/focuskeep.png"
           alt="FocusKeep screenshot"
         />
-        <figcaption className="text-center">
+        <figcaption>
           Track daily work routine with blocks of focused time. Pomodoro
           technique. Forever free.
         </figcaption>

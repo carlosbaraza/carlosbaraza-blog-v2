@@ -3,6 +3,52 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
+const iconProps = {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  className: "h-5 w-5",
+};
+
+function SunIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+function AutoIcon({ isDark }: { isDark: boolean }) {
+  return (
+    <span className="relative inline-flex h-5 w-5 translate-y-[3px]">
+      {isDark ? <SunIcon /> : <MoonIcon />}
+      <span className="absolute -bottom-0.5 -right-1 font-sans text-[8px] font-bold leading-none text-current">
+        A
+      </span>
+    </span>
+  );
+}
+
 export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -13,87 +59,43 @@ export function ThemeToggle() {
 
   function cycleTheme() {
     if (theme === "system") {
-      setTheme(resolvedTheme === "dark" ? "light" : "dark");
-    } else if (theme === "dark") {
       setTheme("light");
-    } else {
+    } else if (theme === "light") {
       setTheme("dark");
+    } else {
+      setTheme("system");
     }
   }
 
-  // Avoid hydration mismatch: render placeholder until mounted
+  const labels: Record<string, string> = {
+    system: "Switch to light mode",
+    light: "Switch to dark mode",
+    dark: "Switch to auto mode",
+  };
+
   if (!mounted) {
     return (
       <button
         className="rounded-md p-2 text-text-secondary hover:text-text transition-colors"
         aria-label="Toggle theme"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-5 w-5"
-        >
-          <circle cx="12" cy="12" r="5" />
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
+        <SunIcon />
       </button>
     );
   }
-
-  const isDark = resolvedTheme === "dark";
 
   return (
     <button
       onClick={cycleTheme}
       className="rounded-md p-2 text-text-secondary hover:text-text transition-colors"
-      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      aria-label={labels[theme ?? "system"]}
     >
-      {isDark ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-5 w-5"
-        >
-          <circle cx="12" cy="12" r="5" />
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
+      {theme === "system" ? (
+        <AutoIcon isDark={resolvedTheme === "dark"} />
+      ) : resolvedTheme === "dark" ? (
+        <SunIcon />
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-5 w-5"
-        >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
+        <MoonIcon />
       )}
     </button>
   );

@@ -8,4 +8,5 @@ export const post: BlogPost = {
   tags: ["Job"],
   draft: false,
   summary: "Senior Full Stack Engineer. JavaScript, Meteor, .NET, C#.",
+  images: ["/content/images/2020/07/hire-space-logo.png"],
 };

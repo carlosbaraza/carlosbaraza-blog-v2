@@ -1,0 +1,13 @@
+---
+title: "Match two possible strings (RegExp)"
+slug: match-two-possible-strings-regexp
+date_published: "2014-05-01T00:00:00.000Z"
+date_updated: "2014-05-01T00:00:00.000Z"
+tags: []
+draft: false
+summary: "Just a little example of the use of Ruby Regular expresions: matching two given possible strings with one."
+---
+
+Just a little example of the use of Ruby Regular expresions: matching two given possible strings with one.
+
+Status will be closed only if status was reopened or opened. This allow as to create some workflows on the code, for example.

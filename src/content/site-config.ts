@@ -1,15 +1,15 @@
 import type { SiteConfig } from "@/lib/types";
 
 export const siteConfig: SiteConfig = {
-  title: "Build, Launch, Repeat",
+  title: "Carlos Baraza",
   author: "Carlos Baraza",
   description:
-    "Side hustle newsletter. Humble insights of a lifetime building online products. I write software and other philosophical stuff.",
+    "Writing about agentic coding workflows, AI strategy, and building products.",
   siteUrl: "https://carlosbaraza.com",
   socialBanner: "/static/images/twitter-card.jpg",
   social: {
     github: "https://github.com/carlosbaraza",
-    twitter: "https://twitter.com/carlosbaraza",
+    twitter: "https://x.com/carlosbaraza",
     youtube: "https://youtube.com/carlosbaraza",
     linkedin: "https://www.linkedin.com/in/carlos-baraza",
   },

@@ -9,8 +9,11 @@ export const metadata = {
 export default function ProjectsPage() {
   return (
     <>
-      <h1 className="font-serif text-3xl font-bold mb-8">Projects</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <h1 className="font-display text-4xl sm:text-5xl font-bold text-center mb-12">
+        Projects
+      </h1>
+
+      <div className="flex flex-col gap-16">
         {projects.map((project) => (
           <ProjectCard key={project.title} project={project} />
         ))}

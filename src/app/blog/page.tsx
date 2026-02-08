@@ -21,12 +21,16 @@ export default async function BlogPage(props: {
 
   return (
     <>
-      <h1 className="font-serif text-3xl font-bold mb-8">All Posts</h1>
-      <div>
+      <h1 className="font-display text-4xl sm:text-5xl font-bold text-center mb-12">
+        All Posts
+      </h1>
+
+      <div className="flex flex-col gap-16">
         {paginatedPosts.map((post) => (
-          <PostCard key={post.slug} post={post} />
+          <PostCard key={post.slug} post={post} featured />
         ))}
       </div>
+
       {totalPages > 1 ? (
         <Pagination
           currentPage={currentPage}

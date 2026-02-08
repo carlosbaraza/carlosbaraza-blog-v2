@@ -8,4 +8,5 @@ export const post: BlogPost = {
   tags: ["Open source", "Side Hustle"],
   draft: false,
   summary: "Founded Meetup with 200+ members in London.",
+  images: ["/content/images/2020/07/web-assembly-london.jpg"],
 };

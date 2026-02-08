@@ -9,4 +9,5 @@ export const post: BlogPost = {
   draft: false,
   summary:
     "Lately, I am particularly interested in Machine Learning. GPUs are used for training the ML models quickly. However, MacBooks don't have\u2026",
+  images: ["/content/images/downloaded_images/Is-Windows-an-option-for-developers-in-2019-/1-c5ch8FSmmEqjjzSISSLhNw.jpeg"],
 };

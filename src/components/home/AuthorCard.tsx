@@ -31,6 +31,7 @@ export function AuthorCard() {
           youtube={author.youtube}
           linkedin={author.linkedin}
           email={author.email}
+          rss="/feed.xml"
           className="mt-1"
         />
       </div>
