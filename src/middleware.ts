@@ -72,6 +72,6 @@ export const config = {
      * - sitemap.xml
      * - robots.txt
      */
-    "/((?!_next|static|content|images|favicon\\.ico|feed\\.xml|sitemap\\.xml|robots\\.txt).*)",
+    "/((?!_next|static|content|images|favicon\\.ico|feed\\.xml|feed-es\\.xml|sitemap\\.xml|robots\\.txt).*)",
   ],
 };
