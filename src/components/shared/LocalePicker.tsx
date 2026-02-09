@@ -50,7 +50,7 @@ export function LocalePicker({ lang }: LocalePickerProps) {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-5 w-5"
+          className="h-5 w-5 hidden md:block"
         >
           <circle cx="12" cy="12" r="10" />
           <path d="M2 12h20" />
