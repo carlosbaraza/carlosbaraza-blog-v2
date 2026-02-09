@@ -60,6 +60,17 @@ interface SocialIconsProps {
   className?: string;
 }
 
+function RssLabeledIcon({ label }: { label: string }) {
+  return (
+    <span className="relative inline-block">
+      <RssIcon />
+      <span className="absolute -bottom-1.5 -right-2 font-sans text-[7px] font-bold uppercase leading-none tracking-wide text-muted">
+        {label}
+      </span>
+    </span>
+  );
+}
+
 export function SocialIcons({
   github,
   twitter,
@@ -79,7 +90,6 @@ export function SocialIcons({
       Icon: EmailIcon,
       label: "Email",
     },
-    { href: rss, Icon: RssIcon, label: "RSS Feed" },
   ].filter((link) => link.href);
 
   return (
@@ -96,6 +106,28 @@ export function SocialIcons({
           <Icon />
         </a>
       ))}
+      {rss ? (
+        <>
+          <a
+            href={rss}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-text-secondary hover:text-accent transition-colors"
+            aria-label="RSS Feed (English)"
+          >
+            <RssLabeledIcon label="EN" />
+          </a>
+          <a
+            href={rss.replace("feed.xml", "feed-es.xml")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-text-secondary hover:text-accent transition-colors"
+            aria-label="RSS Feed (Espa\u00f1ol)"
+          >
+            <RssLabeledIcon label="ES" />
+          </a>
+        </>
+      ) : null}
     </div>
   );
 }

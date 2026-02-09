@@ -40,6 +40,9 @@ function CardImage({ src, alt }: { src?: string; alt: string }) {
 }
 
 export function PostCard({ post, featured = false, lang = "en" }: PostCardProps) {
+  const tr = post.translations?.[lang];
+  const title = tr?.title ?? post.title;
+  const summary = tr?.summary ?? post.summary;
   const imageUrl = post.images?.[0];
   const postHref = localePath(`/blog/${post.slug}`, lang);
 
@@ -49,7 +52,7 @@ export function PostCard({ post, featured = false, lang = "en" }: PostCardProps)
         <Link href={postHref} className="block">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
             <NoiseDistortionImage groupHover className="relative aspect-[16/9] overflow-hidden rounded-[50px] bg-surface">
-              <CardImage src={imageUrl} alt={post.title} />
+              <CardImage src={imageUrl} alt={title} />
             </NoiseDistortionImage>
 
             <div className="flex flex-col justify-center">
@@ -61,7 +64,7 @@ export function PostCard({ post, featured = false, lang = "en" }: PostCardProps)
               </time>
 
               <h3 className="font-display text-3xl sm:text-4xl font-bold leading-[1.15] tracking-tight text-text group-hover:text-accent transition-colors mb-4">
-                {post.title}
+                {title}
               </h3>
 
               {post.tags.length > 0 ? (
@@ -72,9 +75,9 @@ export function PostCard({ post, featured = false, lang = "en" }: PostCardProps)
                 </div>
               ) : null}
 
-              {post.summary ? (
+              {summary ? (
                 <p className="font-serif text-text-secondary leading-relaxed line-clamp-3">
-                  {post.summary}
+                  {summary}
                 </p>
               ) : null}
             </div>
@@ -88,7 +91,7 @@ export function PostCard({ post, featured = false, lang = "en" }: PostCardProps)
     <article className="group">
       <Link href={postHref} className="block">
         <NoiseDistortionImage groupHover className="relative aspect-[4/3] overflow-hidden rounded-sm bg-surface mb-4">
-          <CardImage src={imageUrl} alt={post.title} />
+          <CardImage src={imageUrl} alt={title} />
         </NoiseDistortionImage>
 
         <time
@@ -99,7 +102,7 @@ export function PostCard({ post, featured = false, lang = "en" }: PostCardProps)
         </time>
 
         <h3 className="font-display text-xl sm:text-2xl font-bold leading-snug tracking-tight text-text group-hover:text-accent transition-colors mt-2 mb-2">
-          {post.title}
+          {title}
         </h3>
 
         {post.tags.length > 0 ? (
@@ -110,9 +113,9 @@ export function PostCard({ post, featured = false, lang = "en" }: PostCardProps)
           </div>
         ) : null}
 
-        {post.summary ? (
+        {summary ? (
           <p className="font-serif text-sm text-text-secondary leading-relaxed line-clamp-2">
-            {post.summary}
+            {summary}
           </p>
         ) : null}
       </Link>

@@ -56,7 +56,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      "application/rss+xml": "/feed.xml",
+      "application/rss+xml": [
+        { url: "/feed.xml", title: "RSS Feed (English)" },
+        { url: "/feed-es.xml", title: "RSS Feed (Espa\u00f1ol)" },
+      ],
     },
   },
 };
