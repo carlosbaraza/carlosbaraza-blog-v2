@@ -50,7 +50,9 @@ export function Header({ lang = "en" }: HeaderProps) {
             ))}
           </nav>
 
-          <LocalePicker lang={lang} />
+          <span className="hidden md:inline-flex">
+            <LocalePicker lang={lang} />
+          </span>
           <ThemeToggle />
           <MobileNav links={navigation} lang={lang} />
         </div>
